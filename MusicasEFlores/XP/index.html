@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Portfólio de Investimentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilos personalizados para o slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #4a5568; /* gray-700 */
+            border-radius: 5px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #4299e1; /* blue-400 */
+            cursor: pointer;
+            margin-top: -8px;
+            border: 4px solid #1a202c; /* gray-900 */
+        }
+        input[type=range]::-moz-range-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #4a5568; /* gray-700 */
+            border-radius: 5px;
+        }
+        input[type=range]::-moz-range-thumb {
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #4299e1; /* blue-400 */
+            cursor: pointer;
+            border: 4px solid #1a202c; /* gray-900 */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <!-- Página Principal: Simulador -->
+    <div id="mainPage">
+        <div class="container mx-auto p-4 md:p-8">
+            <!-- Cabeçalho -->
+            <header class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-white">Plano de Investimentos Interativo</h1>
+                <p class="text-gray-400 mt-2">Simule o crescimento do portfólio e analise os ativos.</p>
+            </header>
+
+            <!-- Controles -->
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <!-- Slider de Valor de Investimento -->
+                    <div>
+                        <label for="investmentAmount" class="block text-lg font-medium text-white mb-2">Valor do Investimento</label>
+                        <div class="flex items-center gap-4">
+                            <input type="range" id="investmentAmount" min="20000" max="500000" step="1000" value="250000" class="w-full">
+                            <span id="investmentValue" class="text-xl font-semibold text-blue-400 w-40 text-center">R$ 250.000</span>
+                        </div>
+                    </div>
+                    <!-- Alternador de Cenário -->
+                    <div>
+                        <label class="block text-lg font-medium text-white mb-2">Cenário de Projeção (Tabela)</label>
+                        <div class="flex rounded-lg bg-gray-700 p-1">
+                            <button id="btnReinvest" class="w-full text-center py-2 rounded-md text-sm font-semibold transition-colors duration-300 bg-blue-500 text-white">COM Reinvestimento</button>
+                            <button id="btnNoReinvest" class="w-full text-center py-2 rounded-md text-sm font-semibold transition-colors duration-300 text-gray-300">SEM Reinvestimento</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cartões de Resumo -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+                    <h3 class="text-gray-400 text-lg">Investimento Total</h3>
+                    <p id="summaryTotalInvested" class="text-3xl font-bold text-white mt-2">R$ 250.000</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+                    <h3 class="text-gray-400 text-lg">Rendimento Líquido (5 Anos)</h3>
+                    <p id="summaryReturn5Y" class="text-3xl font-bold text-green-400 mt-2">R$ 228.720</p>
+                </div>
+                 <div class="bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+                    <h3 class="text-gray-400 text-lg">Patrimônio Final (5 Anos)</h3>
+                    <p id="summaryTotal5Y" class="text-3xl font-bold text-blue-400 mt-2">R$ 478.720</p>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
+                <div class="lg:col-span-2 bg-gray-800 p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-semibold text-white mb-4 text-center">Alocação de Ativos</h2>
+                    <div class="relative h-96">
+                        <canvas id="allocationChart"></canvas>
+                    </div>
+                </div>
+                <div class="lg:col-span-3 bg-gray-800 p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-semibold text-white mb-4 text-center">Projeção de Crescimento (Rendimento Líquido)</h2>
+                    <div class="relative h-96">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GRÁFICO DE LINHA MELHORADO -->
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg mb-8">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+                     <h2 class="text-xl font-semibold text-white text-center md:text-left">Evolução do Patrimônio</h2>
+                     <div class="flex items-center space-x-2 rounded-lg bg-gray-700 p-1">
+                         <button class="time-period-btn px-3 py-1 text-sm rounded-md" data-period="1">1 Ano</button>
+                         <button class="time-period-btn px-3 py-1 text-sm rounded-md" data-period="3">3 Anos</button>
+                         <button class="time-period-btn px-3 py-1 text-sm rounded-md" data-period="5">5 Anos</button>
+                         <button class="time-period-btn px-3 py-1 text-sm rounded-md bg-blue-500 text-white" data-period="10">10 Anos</button>
+                     </div>
+                     <div class="flex items-center space-x-4">
+                        <label class="flex items-center text-sm cursor-pointer">
+                            <input type="checkbox" id="toggleReinvestLine" class="form-checkbox h-5 w-5 bg-gray-700 border-gray-600 text-green-500 focus:ring-green-500" checked>
+                            <span class="ml-2 text-green-400">Com Reinvestimento</span>
+                        </label>
+                         <label class="flex items-center text-sm cursor-pointer">
+                            <input type="checkbox" id="toggleNoReinvestLine" class="form-checkbox h-5 w-5 bg-gray-700 border-gray-600 text-blue-500 focus:ring-blue-500" checked>
+                            <span class="ml-2 text-blue-400">Sem Reinvestimento</span>
+                        </label>
+                     </div>
+                </div>
+                <div class="relative h-96">
+                    <canvas id="evolutionChart"></canvas>
+                </div>
+            </div>
+
+
+            <!-- Tabela Detalhada -->
+            <div class="bg-gray-800 p-4 md:p-6 rounded-xl shadow-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-white">Detalhamento da Carteira</h2>
+                    <button id="filterAssetsBtn" class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-bold py-2 px-4 rounded-lg transition-colors duration-300">
+                        Filtrar Ativos
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-700 text-gray-300 uppercase text-sm">
+                            <tr>
+                                <th class="p-3">Ativo</th>
+                                <th class="p-3 text-right">Alocação (%)</th>
+                                <th class="p-3 text-right">Valor (R$)</th>
+                                <th class="p-3 text-right">Rend. 1 Ano</th>
+                                <th class="p-3 text-right">Rend. 3 Anos</th>
+                                <th class="p-3 text-right">Rend. 5 Anos</th>
+                                <th class="p-3 text-center">Detalhes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="portfolioTableBody" class="divide-y divide-gray-700">
+                            <!-- Linhas serão injetadas pelo JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Rodapé -->
+            <footer class="text-center mt-8 text-gray-500 text-sm">
+                <p>As projeções e dados históricos apresentados são estimativas com fins educacionais. Rentabilidade passada não é garantia de rentabilidade futura. Todo investimento envolve riscos.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Página de Detalhes do Ativo -->
+    <div id="detailPage" class="hidden">
+        <div class="container mx-auto p-4 md:p-8">
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 id="detailAssetTicker" class="text-3xl md:text-4xl font-bold text-white"></h1>
+                    <p id="detailAssetClass" class="text-gray-400 mt-2"></p>
+                </div>
+                <button id="backToMainBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg transition-colors duration-300">
+                    &larr; Voltar
+                </button>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-lg mb-8">
+                        <h2 class="text-xl font-semibold text-white mb-4">Tese de Investimento (Por que foi escolhido?)</h2>
+                        <p id="detailAssetThesis" class="text-gray-300 leading-relaxed"></p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                        <h2 class="text-xl font-semibold text-white mb-4">Desempenho Histórico (Simulado)</h2>
+                        <div class="relative h-96">
+                            <canvas id="historyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-1">
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                        <h2 class="text-xl font-semibold text-white mb-4">Dados Pertinentes</h2>
+                        <div id="detailAssetMetrics" class="space-y-4">
+                           <!-- Métricas serão injetadas aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para Filtro de Ativos -->
+    <div id="assetFilterModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+             <div class="flex justify-between items-center p-4 border-b border-gray-700">
+                <h2 class="text-xl font-semibold text-white">Selecionar Ativos para Análise</h2>
+                <button id="closeFilterModal" class="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            <div id="assetFilterContent" class="p-6 overflow-y-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- Checkboxes dos ativos serão injetados aqui -->
+            </div>
+            <div class="p-4 border-t border-gray-700 flex justify-end">
+                <button id="applyAssetFilter" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-colors duration-300">
+                    Aplicar Filtro
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- DADOS ---
+        const portfolioAssets = [
+            { class: 'Ações BR', subStrategy: 'Núcleo', ticker: 'BOVA11', allocation: 0.125, annualReturn: 0.12, isActive: true, thesis: 'É a forma mais barata e eficiente de investir no mercado de ações brasileiro como um todo, garantindo diversificação setorial imediata e diluindo o risco de escolher uma única empresa.', keyMetrics: { 'Tipo': 'ETF Large Cap', 'Dividend Yield': '~2.0%', 'Risco': 'Alto' } },
+            { class: 'Ações BR', subStrategy: 'Núcleo', ticker: 'SMAL11', allocation: 0.125, annualReturn: 0.15, isActive: true, thesis: 'Para capturar um potencial de crescimento superior ao das grandes empresas. Permite investir no segmento de Small Caps de forma diversificada, mitigando o risco de apostar em uma única empresa pequena.', keyMetrics: { 'Tipo': 'ETF Small Cap', 'Dividend Yield': '~1.0%', 'Risco': 'Muito Alto' } },
+            { class: 'Ações BR', subStrategy: 'Satélite', ticker: 'SPX Patriot', allocation: 0.10, annualReturn: 0.15, isActive: true, thesis: 'Para adicionar o potencial da gestão ativa qualificada. A SPX é uma das gestoras mais renomadas do Brasil, buscando superar o Ibovespa através de uma análise profunda para selecionar as melhores ações (stock-picking).', keyMetrics: { 'Tipo': 'Fundo de Ações', 'Taxa de Adm.': '2.0%', 'Risco': 'Alto' } },
+            { class: 'Ações INT', subStrategy: 'Núcleo', ticker: 'IVVB11', allocation: 0.175, annualReturn: 0.133, isActive: true, thesis: 'É a forma mais direta, líquida e de baixo custo de dolarizar a carteira e investir nas 500 maiores empresas dos EUA. A exposição ao mercado americano é fundamental para qualquer portfólio global.', keyMetrics: { 'Tipo': 'ETF S&P 500', 'Dividend Yield': '~1.3%', 'Risco': 'Alto' } },
+            { class: 'Ações INT', subStrategy: 'Núcleo', ticker: 'WRLD11', allocation: 0.075, annualReturn: 0.125, isActive: true, thesis: 'Para obter uma diversificação verdadeiramente global. Este ETF investe em mais de 9.000 empresas de mercados desenvolvidos e emergentes, reduzindo a concentração no mercado americano.', keyMetrics: { 'Tipo': 'ETF Global', 'Dividend Yield': '~1.5%', 'Risco': 'Alto' } },
+            { class: 'Ações INT', subStrategy: 'Satélite', ticker: 'NVDC34', allocation: 0.05, annualReturn: 0.18, isActive: true, thesis: 'É uma aposta direta na expansão exponencial da Inteligência Artificial (IA). A Nvidia é a líder absoluta no design de GPUs, componentes essenciais para a revolução da IA.', keyMetrics: { 'Tipo': 'BDR - Tecnologia', 'Dividend Yield': '0.0%', 'Risco': 'Muito Alto' } },
+            { class: 'Ações INT', subStrategy: 'Satélite', ticker: 'MSFT34', allocation: 0.05, annualReturn: 0.158, isActive: true, thesis: 'Pela combinação de crescimento e geração de renda. A empresa possui uma posição dominante em nuvem (Azure) e IA, e ao mesmo tempo, paga dividendos crescentes.', keyMetrics: { 'Tipo': 'BDR - Tecnologia', 'Dividend Yield': '~0.8%', 'Risco': 'Alto' } },
+            { class: 'FIIs', subStrategy: 'Div. Setorial', ticker: 'HGLG11', allocation: 0.05, annualReturn: 0.145, isActive: true, thesis: 'Um dos maiores FIIs de galpões logísticos, setor que se beneficia do crescimento do e-commerce. Possui ativos de alta qualidade e inquilinos robustos, mitigando o risco de vacância.', keyMetrics: { 'Tipo': 'FII - Logística', 'Dividend Yield': '~9.5%', 'Risco': 'Médio' } },
+            { class: 'FIIs', subStrategy: 'Div. Setorial', ticker: 'XPML11', allocation: 0.05, annualReturn: 0.158, isActive: true, thesis: 'Possui um portfólio diversificado de participações em shoppings dominantes. O setor se beneficia da retomada do consumo e o fundo negocia com desconto patrimonial.', keyMetrics: { 'Tipo': 'FII - Shoppings', 'Dividend Yield': '~10.8%', 'Risco': 'Médio' } },
+            { class: 'FIIs', subStrategy: 'Div. Setorial', ticker: 'KNIP11', allocation: 0.05, annualReturn: 0.125, isActive: true, thesis: 'Para proteção contra a inflação. É o maior FII do mercado, com carteira massivamente diversificada em títulos de dívida imobiliária (CRIs) de baixo risco de crédito (high grade).', keyMetrics: { 'Tipo': 'FII - Papel', 'Dividend Yield': '~12.5%', 'Risco': 'Baixo-Médio' } },
+            { class: 'FIIs', subStrategy: 'Div. Setorial', ticker: 'AIEC11', allocation: 0.05, annualReturn: 0.13, isActive: true, thesis: 'Exposição ao setor de escritórios de alto padrão. O fundo se concentra em edifícios "Triple A" em regiões nobres de São Paulo, que tendem a atrair inquilinos de primeira linha.', keyMetrics: { 'Tipo': 'FII - Lajes Corp.', 'Dividend Yield': '~9.0%', 'Risco': 'Médio' } },
+            { class: 'Renda Fixa', subStrategy: 'Crédito High Grade', ticker: 'RESA17', allocation: 0.05, annualReturn: 0.109, isActive: true, thesis: 'Pela segurança máxima. É uma debenture isenta de IR com a mais alta classificação de crédito possível (AAA), indicando uma capacidade extremamente forte de honrar seus pagamentos.', keyMetrics: { 'Tipo': 'Debenture Incent.', 'Taxa': 'IPCA + 5.9%', 'Risco': 'Muito Baixo' } },
+            { class: 'Renda Fixa', subStrategy: 'Crédito High Grade', ticker: 'PEJA11', allocation: 0.05, annualReturn: 0.124, isActive: true, thesis: 'Para obter um retorno real um pouco maior, mantendo um elevado padrão de segurança. Também isenta de IR, oferece uma remuneração superior com um rating de crédito muito forte (AA+).', keyMetrics: { 'Tipo': 'Debenture Incent.', 'Taxa': 'IPCA + 7.4%', 'Risco': 'Baixo' } }
+        ];
+
+        // --- ELEMENTOS DO DOM ---
+        const mainPage = document.getElementById('mainPage');
+        const detailPage = document.getElementById('detailPage');
+        const backToMainBtn = document.getElementById('backToMainBtn');
+        const investmentAmountSlider = document.getElementById('investmentAmount');
+        const investmentValueSpan = document.getElementById('investmentValue');
+        const btnReinvest = document.getElementById('btnReinvest');
+        const btnNoReinvest = document.getElementById('btnNoReinvest');
+        const portfolioTableBody = document.getElementById('portfolioTableBody');
+        const summaryTotalInvested = document.getElementById('summaryTotalInvested');
+        const summaryReturn5Y = document.getElementById('summaryReturn5Y');
+        const summaryTotal5Y = document.getElementById('summaryTotal5Y');
+        const toggleReinvestLine = document.getElementById('toggleReinvestLine');
+        const toggleNoReinvestLine = document.getElementById('toggleNoReinvestLine');
+        const filterAssetsBtn = document.getElementById('filterAssetsBtn');
+        const assetFilterModal = document.getElementById('assetFilterModal');
+        const closeFilterModal = document.getElementById('closeFilterModal');
+        const assetFilterContent = document.getElementById('assetFilterContent');
+        const applyAssetFilter = document.getElementById('applyAssetFilter');
+        const timePeriodButtons = document.querySelectorAll('.time-period-btn');
+        
+        // Detail Page Elements
+        const detailAssetTicker = document.getElementById('detailAssetTicker');
+        const detailAssetClass = document.getElementById('detailAssetClass');
+        const detailAssetThesis = document.getElementById('detailAssetThesis');
+        const detailAssetMetrics = document.getElementById('detailAssetMetrics');
+        
+        let allocationChart, growthChart, evolutionChart, historyChart;
+        let currentScenario = 'reinvest';
+        let evolutionChartPeriod = 10;
+
+        // --- NAVEGAÇÃO ---
+        function showDetailPage(ticker) {
+            mainPage.classList.add('hidden');
+            detailPage.classList.remove('hidden');
+            window.scrollTo(0, 0);
+            renderDetailPage(ticker);
+        }
+
+        function showMainPage() {
+            detailPage.classList.add('hidden');
+            mainPage.classList.remove('hidden');
+        }
+
+        // --- FORMATAÇÃO ---
+        const formatCurrency = (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        // --- CÁLCULOS ---
+        const calculateProjections = (totalInvestment) => {
+            const activeAssets = portfolioAssets.filter(asset => asset.isActive);
+            if (activeAssets.length === 0) {
+                 return { tableData: [], totals: { totalReturn1Y: 0, totalReturn3Y: 0, totalReturn5Y: 0 }, weightedAnnualReturn: 0 };
+            }
+
+            const totalActiveAllocation = activeAssets.reduce((acc, asset) => acc + asset.allocation, 0);
+            const weightedAnnualReturn = activeAssets.reduce((acc, asset) => acc + (asset.allocation / totalActiveAllocation * asset.annualReturn), 0);
+
+            let totalReturn1Y = 0, totalReturn3Y = 0, totalReturn5Y = 0;
+            
+            const tableData = activeAssets.map(asset => {
+                const adjustedAllocation = asset.allocation / totalActiveAllocation;
+                const initialValue = totalInvestment * adjustedAllocation;
+                let return1Y, return3Y, return5Y;
+
+                if (currentScenario === 'reinvest') {
+                    return1Y = initialValue * Math.pow(1 + asset.annualReturn, 1) - initialValue;
+                    return3Y = initialValue * Math.pow(1 + asset.annualReturn, 3) - initialValue;
+                    return5Y = initialValue * Math.pow(1 + asset.annualReturn, 5) - initialValue;
+                } else {
+                    return1Y = initialValue * asset.annualReturn * 1;
+                    return3Y = initialValue * asset.annualReturn * 3;
+                    return5Y = initialValue * asset.annualReturn * 5;
+                }
+
+                totalReturn1Y += return1Y;
+                totalReturn3Y += return3Y;
+                totalReturn5Y += return5Y;
+
+                return {
+                    ticker: asset.ticker,
+                    allocation: adjustedAllocation * 100,
+                    initialValue,
+                    return1Y,
+                    return3Y,
+                    return5Y
+                };
+            });
+            
+            return { tableData, totals: { totalReturn1Y, totalReturn3Y, totalReturn5Y }, weightedAnnualReturn };
+        };
+        
+        // --- GERAÇÃO DE DADOS HISTÓRICOS SIMULADOS ---
+        function generateMockHistory(annualReturn, years = 10) {
+            const data = [];
+            const labels = [];
+            let value = 100; // Start with a base of 100
+            const volatility = 0.15; // 15% volatility
+
+            for (let i = years; i >= 0; i--) {
+                labels.push(`Ano ${new Date().getFullYear() - i}`);
+                if (i === years) {
+                    data.push(value);
+                } else {
+                    const randomFactor = (Math.random() - 0.5) * volatility;
+                    const growth = 1 + annualReturn + randomFactor;
+                    value *= growth;
+                    data.push(value);
+                }
+            }
+            return { labels, data };
+        }
+
+        // --- RENDERIZAÇÃO ---
+        const renderTable = (data) => {
+            let tableHTML = '';
+            data.forEach(item => {
+                tableHTML += `
+                    <tr class="hover:bg-gray-700/50">
+                        <td class="p-3 font-medium">${item.ticker}</td>
+                        <td class="p-3 text-right">${item.allocation.toFixed(1)}%</td>
+                        <td class="p-3 text-right">${formatCurrency(item.initialValue)}</td>
+                        <td class="p-3 text-right text-green-400">${formatCurrency(item.return1Y)}</td>
+                        <td class="p-3 text-right text-green-400">${formatCurrency(item.return3Y)}</td>
+                        <td class="p-3 text-right text-green-400">${formatCurrency(item.return5Y)}</td>
+                        <td class="p-3 text-center">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-1 px-3 rounded-full transition-colors duration-300" onclick="showDetailPage('${item.ticker}')">
+                                Detalhes
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            portfolioTableBody.innerHTML = tableHTML;
+        };
+        
+        const renderCharts = (totalInvestment, totals, weightedReturn) => {
+            const activeAssets = portfolioAssets.filter(asset => asset.isActive);
+
+            const allocationData = activeAssets.reduce((acc, asset) => {
+                acc[asset.class] = (acc[asset.class] || 0) + asset.allocation;
+                return acc;
+            }, {});
+            const totalActiveAllocation = Object.values(allocationData).reduce((sum, val) => sum + val, 0);
+            const allocationLabels = Object.keys(allocationData);
+            const allocationValues = Object.values(allocationData).map(val => (val / totalActiveAllocation) * totalInvestment);
+            
+            const growthLabels = ['1 Ano', '3 Anos', '5 Anos'];
+            const growthValues = [totals.totalReturn1Y, totals.totalReturn3Y, totals.totalReturn5Y];
+            
+            const evolutionLabels = [];
+            const evolutionValuesReinvest = [];
+            const evolutionValuesNoReinvest = [];
+            const evolutionValuesBase = [];
+
+            if (evolutionChartPeriod === 1) {
+                for (let i = 0; i <= 12; i++) {
+                    evolutionLabels.push(`Mês ${i}`);
+                    const monthlyRate = Math.pow(1 + weightedReturn, 1/12) - 1;
+                    evolutionValuesReinvest.push(totalInvestment * Math.pow(1 + monthlyRate, i));
+                    evolutionValuesNoReinvest.push(totalInvestment * (1 + monthlyRate * i));
+                    evolutionValuesBase.push(totalInvestment);
+                }
+            } else {
+                 for(let i = 0; i <= evolutionChartPeriod; i++) {
+                    evolutionLabels.push(`Ano ${i}`);
+                    evolutionValuesReinvest.push(totalInvestment * Math.pow(1 + weightedReturn, i));
+                    evolutionValuesNoReinvest.push(totalInvestment * (1 + weightedReturn * i));
+                    evolutionValuesBase.push(totalInvestment);
+                }
+            }
+
+            if (allocationChart) allocationChart.destroy();
+            if (growthChart) growthChart.destroy();
+            if (evolutionChart) evolutionChart.destroy();
+
+            const allocationCtx = document.getElementById('allocationChart').getContext('2d');
+            allocationChart = new Chart(allocationCtx, { type: 'doughnut', data: { labels: allocationLabels, datasets: [{ data: allocationValues, backgroundColor: ['#3182ce', '#38a169', '#dd6b20', '#805ad5'], borderColor: '#1a202c', borderWidth: 4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#a0aec0', padding: 20 } } } } });
+            const growthCtx = document.getElementById('growthChart').getContext('2d');
+            growthChart = new Chart(growthCtx, { type: 'bar', data: { labels: growthLabels, datasets: [{ label: 'Rendimento Líquido', data: growthValues, backgroundColor: '#4299e1', borderRadius: 4 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { color: '#a0aec0', callback: value => formatCurrency(value) }, grid: { color: 'rgba(160, 174, 192, 0.1)' } }, x: { ticks: { color: '#a0aec0' }, grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: context => formatCurrency(context.raw) } } } } });
+            const evolutionCtx = document.getElementById('evolutionChart').getContext('2d');
+            evolutionChart = new Chart(evolutionCtx, { type: 'line', data: { labels: evolutionLabels, datasets: [ { label: 'Com Reinvestimento', data: evolutionValuesReinvest, borderColor: '#38a169', backgroundColor: 'rgba(56, 161, 105, 0.1)', fill: true, tension: 0.1, hidden: !toggleReinvestLine.checked }, { label: 'Sem Reinvestimento', data: evolutionValuesNoReinvest, borderColor: '#3182ce', backgroundColor: 'rgba(49, 130, 206, 0.1)', fill: true, tension: 0.1, hidden: !toggleNoReinvestLine.checked }, { label: 'Valor Investido', data: evolutionValuesBase, borderColor: '#a0aec0', borderDash: [5, 5], fill: false, tension: 0.1, pointRadius: 0 } ] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: false, ticks: { color: '#a0aec0', callback: value => formatCurrency(value) }, grid: { color: 'rgba(160, 174, 192, 0.1)' } }, x: { ticks: { color: '#a0aec0' }, grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: context => `${context.dataset.label}: ${formatCurrency(context.raw)}` } } } } });
+        };
+
+        const renderDetailPage = (ticker) => {
+            const asset = portfolioAssets.find(a => a.ticker === ticker);
+            if (!asset) return;
+
+            detailAssetTicker.textContent = asset.ticker;
+            detailAssetClass.textContent = `${asset.class} - ${asset.subStrategy}`;
+            detailAssetThesis.textContent = asset.thesis;
+
+            let metricsHTML = '';
+            for (const [key, value] of Object.entries(asset.keyMetrics)) {
+                metricsHTML += `
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-gray-400">${key}</span>
+                        <span class="font-semibold text-white">${value}</span>
+                    </div>
+                `;
+            }
+            detailAssetMetrics.innerHTML = metricsHTML;
+
+            if (historyChart) historyChart.destroy();
+            
+            const historyData = generateMockHistory(asset.annualReturn);
+            const historyCtx = document.getElementById('historyChart').getContext('2d');
+            historyChart = new Chart(historyCtx, {
+                type: 'line',
+                data: {
+                    labels: historyData.labels.slice(-10), // Last 10 years
+                    datasets: [{
+                        label: 'Desempenho (Base 100)',
+                        data: historyData.data.slice(-10),
+                        borderColor: '#4299e1',
+                        backgroundColor: 'rgba(66, 153, 225, 0.1)',
+                        fill: true,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { ticks: { color: '#a0aec0' }, grid: { color: 'rgba(160, 174, 192, 0.1)' } },
+                        x: { ticks: { color: '#a0aec0' }, grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        };
+
+        const updateDashboard = () => {
+            const totalInvestment = parseFloat(investmentAmountSlider.value);
+            investmentValueSpan.textContent = formatCurrency(totalInvestment);
+            const { tableData, totals, weightedAnnualReturn } = calculateProjections(totalInvestment);
+            renderTable(tableData);
+            renderCharts(totalInvestment, totals, weightedAnnualReturn);
+            summaryTotalInvested.textContent = formatCurrency(totalInvestment);
+            summaryReturn5Y.textContent = formatCurrency(totals.totalReturn5Y);
+            summaryTotal5Y.textContent = formatCurrency(totalInvestment + totals.totalReturn5Y);
+        };
+
+        // --- EVENT LISTENERS ---
+        investmentAmountSlider.addEventListener('input', updateDashboard);
+        btnReinvest.addEventListener('click', () => { currentScenario = 'reinvest'; updateDashboard(); });
+        btnNoReinvest.addEventListener('click', () => { currentScenario = 'no-reinvest'; updateDashboard(); });
+        backToMainBtn.addEventListener('click', showMainPage);
+        toggleReinvestLine.addEventListener('change', () => { evolutionChart.data.datasets[0].hidden = !toggleReinvestLine.checked; evolutionChart.update(); });
+        toggleNoReinvestLine.addEventListener('change', () => { evolutionChart.data.datasets[1].hidden = !toggleNoReinvestLine.checked; evolutionChart.update(); });
+        
+        filterAssetsBtn.addEventListener('click', () => {
+            assetFilterContent.innerHTML = '';
+            portfolioAssets.forEach(asset => {
+                assetFilterContent.innerHTML += `
+                    <label class="flex items-center text-sm cursor-pointer p-2 rounded-md hover:bg-gray-700">
+                        <input type="checkbox" data-ticker="${asset.ticker}" class="form-checkbox h-5 w-5 bg-gray-700 border-gray-600 text-blue-500 focus:ring-blue-500" ${asset.isActive ? 'checked' : ''}>
+                        <span class="ml-2">${asset.ticker}</span>
+                    </label>
+                `;
+            });
+            assetFilterModal.classList.remove('hidden');
+        });
+        
+        closeFilterModal.addEventListener('click', () => assetFilterModal.classList.add('hidden'));
+        applyAssetFilter.addEventListener('click', () => {
+            const checkboxes = assetFilterContent.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                const asset = portfolioAssets.find(a => a.ticker === cb.dataset.ticker);
+                if(asset) asset.isActive = cb.checked;
+            });
+            assetFilterModal.classList.add('hidden');
+            updateDashboard();
+        });
+
+        timePeriodButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                timePeriodButtons.forEach(btn => btn.classList.remove('bg-blue-500', 'text-white'));
+                button.classList.add('bg-blue-500', 'text-white');
+                evolutionChartPeriod = parseInt(button.dataset.period);
+                updateDashboard();
+            });
+        });
+
+        // --- CARREGAMENTO INICIAL ---
+        window.addEventListener('load', updateDashboard);
+
+    </script>
+</body>
+</html>
