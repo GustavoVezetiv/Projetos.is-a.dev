@@ -33,6 +33,15 @@
     margin: 0 10px;
 }
 
+.group > span {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.group:hover > span {
+    opacity: 1;
+}
+
 @media (max-width: 768px) {
     .dock-item {
         width: 10rem;
@@ -158,4 +167,57 @@
 /* Ícone com rotação */
 #bio-toggle-icon {
     display: inline-block;
+}
+
+/* --- BACKGROUND ANIMADO (Mesh gradient leve) --- */
+.animated-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    --mesh-cyan: #22d3ee;
+    --mesh-blue: #3b82f6;
+    --mesh-indigo: #6366f1;
+    --mesh-violet: #8b5cf6;
+    --mesh-pink: #ec4899;
+    --mesh-emerald: #10b981;
+    --mesh-amber: #f59e0b;
+    background-color: #08111f;
+    background-image:
+        radial-gradient(105% 80% at 8% 18%, color-mix(in srgb, var(--mesh-cyan) 46%, transparent) 0%, transparent 58%),
+        radial-gradient(95% 82% at 92% 20%, color-mix(in srgb, var(--mesh-violet) 44%, transparent) 0%, transparent 56%),
+        radial-gradient(95% 90% at 12% 88%, color-mix(in srgb, var(--mesh-blue) 42%, transparent) 0%, transparent 60%),
+        radial-gradient(86% 78% at 88% 86%, color-mix(in srgb, var(--mesh-pink) 34%, transparent) 0%, transparent 58%),
+        linear-gradient(125deg, transparent 5%, color-mix(in srgb, var(--mesh-emerald) 20%, transparent) 28%, transparent 54%),
+        linear-gradient(245deg, transparent 12%, color-mix(in srgb, var(--mesh-amber) 15%, transparent) 35%, transparent 62%),
+        linear-gradient(135deg, #050814 0%, color-mix(in srgb, var(--mesh-indigo) 24%, #07111f) 45%, #050814 100%),
+        radial-gradient(125% 120% at 50% 50%, transparent 36%, rgba(0, 0, 0, 0.78) 100%);
+    background-repeat: no-repeat;
+    background-size: 180% 180%, 170% 170%, 160% 160%, 165% 165%, 190% 190%, 180% 180%, 155% 155%, 100% 100%;
+    background-position: 6% 36%, 92% 28%, 18% 76%, 86% 78%, 28% 42%, 74% 58%, 50% 50%, 50% 50%;
+    transform: translateZ(0);
+    animation: gradientMorph 20s ease-in-out infinite alternate;
+}
+
+@keyframes gradientMorph {
+    0% {
+        background-position: 6% 36%, 92% 28%, 18% 76%, 86% 78%, 28% 42%, 74% 58%, 50% 50%, 50% 50%;
+    }
+    50% {
+        background-position: 18% 28%, 82% 34%, 10% 86%, 92% 70%, 34% 54%, 68% 48%, 52% 48%, 50% 50%;
+    }
+    100% {
+        background-position: 12% 44%, 96% 18%, 22% 68%, 76% 88%, 20% 36%, 82% 62%, 48% 52%, 50% 50%;
+    }
+}
+
+.modal-exit-hint {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.42);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animated-bg {
+        animation: none;
+    }
 }

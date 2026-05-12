@@ -6,6 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vezetiv</title>
 
+    <style>
+        html:not(.app-ready) body {
+            opacity: 0;
+        }
+
+        body {
+            transition: opacity 0.2s ease;
+        }
+    </style>
+    <script>
+        window.addEventListener('load', () => {
+            document.documentElement.classList.add('app-ready');
+        });
+        setTimeout(() => {
+            document.documentElement.classList.add('app-ready');
+        }, 1200);
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,9 +39,12 @@
 
 <body class="bg-[#6C8491] h-screen w-full overflow-hidden text-white select-none">
 
-    <main class="w-full h-full relative">
+    <!-- Fundo animado leve com mesh gradient -->
+    <div class="animated-bg"></div>
 
-        <section class="page-section h-full w-full flex flex-col items-center justify-center font-inter bg-[#6C8491] relative">
+    <main class="w-full h-full relative z-10">
+
+        <section class="page-section h-full w-full flex flex-col items-center justify-center font-inter bg-transparent relative">
 
             <div id="v3-hero"
                 class="flex-1 flex flex-col justify-center items-center mb-24 animate-fadeIn transition-all duration-500 relative w-full">
@@ -81,6 +102,9 @@
                     <div id="v3-app-body" class="flex-1 overflow-y-auto overflow-x-hidden p-6 relative">
                         <!-- Conteúdo será preenchido aqui -->
                     </div>
+                    <div class="modal-exit-hint px-4 py-2 text-center text-[10px] uppercase tracking-[0.18em] shrink-0">
+                        Clique em qualquer lugar fora para sair
+                    </div>
                 </div>
             </div>
 
@@ -109,6 +133,13 @@
                             class="absolute -top-12 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Currículo</span>
                     </div>
 
+                    <div onclick="loadApp('dossie')"
+                        class="dock-item group relative w-12 h-12 bg-white/10 rounded-xl flex justify-center items-center text-white/90 text-2xl border border-white/5 cursor-pointer shadow-lg">
+                        <i class="fas fa-scroll"></i>
+                        <span
+                            class="absolute -top-12 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Dossiê</span>
+                    </div>
+
                     <div class="w-[1px] h-8 bg-white/20 mx-1 self-center"></div>
 
                     <div onclick="loadApp('sobre')"
@@ -132,6 +163,9 @@
                 <div id="cert-modal-content" class="space-y-4">
                     <!-- Conteúdo será preenchido dinamicamente -->
                 </div>
+                <p class="modal-exit-hint mt-5 pt-4 text-center text-[10px] uppercase tracking-[0.18em]">
+                    Clique em qualquer lugar fora para sair
+                </p>
             </div>
         </div>
 
@@ -447,7 +481,7 @@
             <div class="flex flex-col items-center justify-center h-full p-6">
                 <i class="far fa-file-pdf text-6xl text-red-500 mb-4"></i>
                 <h2 class="text-2xl font-bold mb-2">Visualizador de PDF</h2>
-                <p class="text-white/50 mb-6">Clique aqui para vizualizar em PDF o currículo.</p>
+                <p class="text-white/50 mb-6">Clique aqui para visualizar em PDF o currículo.</p>
                 <p class="text-white/50 mb-6 text-center">
                     <a href="mailto:gustavovezetiv8@gmail.com?subject=Oportunidade%20de%20Trabalho&body=Ol%C3%A1%20Gustavo%2C%0A%0AGostaria%20de%20conversar%20sobre%20uma%20oportunidade..." 
                        class="text-cyan-400 hover:text-cyan-300 transition-colors underline">
@@ -455,7 +489,7 @@
                     </a>
                 </p>
 
-                <a href="arc/Curriculo 2025.pdf" download="Curriculo 2025.pdf" target="_blank"
+                <a href="arc/Curriculo_Gustavo_Vezetiv_Python_Dados_Integracoes.pdf" download="Curriculo_Gustavo_Vezetiv_Python_Dados_Integracoes.pdf" target="_blank"
                     class="px-6 py-2 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform cursor-pointer mb-8">
                     Baixar PDF
                 </a>
@@ -465,7 +499,32 @@
                     <div class="bg-white/10 px-4 py-2 border-b border-white/20">
                         <p class="text-sm text-white/60">Prévia do Currículo</p>
                     </div>
-                    <iframe src="arc/Curriculo 2025.pdf" class="w-full h-96 bg-white"></iframe>
+                    <object data="arc/Curriculo_Gustavo_Vezetiv_Python_Dados_Integracoes.pdf" type="application/pdf" class="w-full h-96 bg-white">
+                        <div class="bg-[#0f1014] p-6 text-center">
+                            <p class="text-white/60 text-sm mb-4">A prévia do PDF não abriu neste navegador.</p>
+                            <a href="arc/Curriculo_Gustavo_Vezetiv_Python_Dados_Integracoes.pdf" target="_blank"
+                               class="text-cyan-300 underline">Abrir currículo em nova aba</a>
+                        </div>
+                    </object>
+                </div>
+            </div>
+        </div>
+
+        <div id="template-dossie" class="hidden">
+            <div class="pt-10 px-4 pb-24">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 border-b border-white/10 pb-4">
+                    <div>
+                        <h2 class="font-montserrat text-4xl font-black text-white mb-1 tracking-tighter">DOSSIÊ</h2>
+                        <p class="text-white/50 text-xs font-inter tracking-widest uppercase">Recomendações • Bastidores • Confiança</p>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 text-[10px] text-cyan-200 border border-cyan-400/20 uppercase tracking-widest">
+                        <i class="fas fa-scroll"></i>
+                        <span>Arquivo Vezetiv</span>
+                    </div>
+                </div>
+
+                <div id="dossie-recommendations" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Conteúdo renderizado pelo array recomendacoes -->
                 </div>
             </div>
         </div>
@@ -475,6 +534,11 @@
     <script>
 
         let currentOpenApp = null;
+
+        // ===== DOSSIÊ / RECOMENDAÇÕES =====
+        // Para adicionar uma recomendação, duplique um objeto abaixo e preencha:
+        // { nome: 'Nome da pessoa', contexto: 'Cargo / empresa / relação', texto: 'Texto da recomendação', icon: 'fa-handshake' }
+        const recomendacoes = [];
 
         // ===== BANCO DE DADOS DE CERTIFICAÇÕES =====
         const certificacoes = {
@@ -761,6 +825,7 @@
                 if (appId === 'certificados') title = "Certificados.app";
                 if (appId === 'sobre') title = "Bio.txt";
                 if (appId === 'curriculo') title = "Curriculo.pdf";
+                if (appId === 'dossie') title = "Dossie.log";
                 titleEl.innerText = title;
 
                 windowEl.classList.remove('hidden');
@@ -772,9 +837,49 @@
                         marquees.forEach(marquee => createDraggableMarquee(marquee, -0.5));
                     }, 100);
                 }
+
+                if (appId === 'dossie') {
+                    renderDossie(bodyEl);
+                }
             } else {
                 console.error('Template não encontrado:', templateId);
             }
+        }
+
+        function renderDossie(root = document) {
+            const container = root.querySelector('#dossie-recommendations');
+            if (!container) return;
+
+            if (!recomendacoes.length) {
+                container.innerHTML = `
+                    <div class="md:col-span-2 border border-dashed border-white/15 rounded-2xl p-8 text-center bg-white/[0.03]">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-cyan-500/30 to-purple-500/30 border border-white/10 flex items-center justify-center text-2xl text-cyan-200">
+                            <i class="fas fa-scroll"></i>
+                        </div>
+                        <h3 class="font-montserrat text-xl font-bold text-white mb-2">Recomendações em preparação</h3>
+                        <p class="text-white/55 max-w-xl mx-auto text-sm leading-relaxed">
+                            Este espaço vai reunir relatos de pessoas que trabalharam, estudaram ou construíram algo comigo.
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = recomendacoes.map((recomendacao) => `
+                <article class="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 hover:border-cyan-400/30 transition-colors">
+                    <div class="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-cyan-400/10"></div>
+                    <div class="relative flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/30 to-purple-500/30 border border-white/10 flex items-center justify-center text-xl text-cyan-200 shrink-0">
+                            <i class="fas ${recomendacao.icon || 'fa-quote-left'}"></i>
+                        </div>
+                        <div>
+                            <p class="text-white/80 text-sm leading-relaxed mb-4">"${recomendacao.texto}"</p>
+                            <h3 class="font-montserrat text-white font-bold text-sm">${recomendacao.nome || 'Recomendação profissional'}</h3>
+                            <p class="text-white/45 text-xs mt-1">${recomendacao.contexto || 'Experiência compartilhada'}</p>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
         }
 
         function closeApp() {
@@ -983,25 +1088,6 @@
                 }, 100);
             }
         };
-    </script>
+</script>
 </body>
 </html>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vezetiv</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Roboto:wght@300;400;700&family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;600&family=Press+Start+2P&display=swap"
-        rel="stylesheet">
-
-    <link rel="icon" href="img/Group 266.svg">
-
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body class="bg-[#6C8491] h-screen w-full overflow-hidden text-white select-none">
-
- 
