@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Conteúdo pessoal/legado fora do portfólio profissional
+Disallow: /MusicasEFlores/
+Disallow: /arc/dashboard.old.html
+
+Sitemap: https://vezetiv.is-a.dev/sitemap.xml
