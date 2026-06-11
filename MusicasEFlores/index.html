@@ -1,55 +1,233 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="light">
+<html lang="pt-BR" data-theme="light">
   <head>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-   
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style.css">
-    </head>
-    <title>Sabrina</title>
-  </head>
-  <body>
-    <div id="container">
-        <div id="profile">
-            <img src="assets/beijinho.jpg" alt="Foto nossa">
-              <p>@AmorDaMinhaVida</p>
-    </div>
-      <div id="switch" onclick="toggleMode()">
-        <button></button>
-        <span></span>
-      </div>
-      <ul>
-        <li>
-          <a href="FloresVaso/floresVaso.html" target="_blank">Flowers</a>
-        </li>
-        <li>
-          <a href="card/index.html" target="_blank">Card</a>
-        </li>
-        <li>
-          <a href="Flowers/index.html" target="_blank">Birth</a>
-        </li>
-        <li>
-          <a href="Spotfy/index.html" target="_blank">Spotfy</a>
-        </li>
+    <meta
+      name="description"
+      content="Um presente digital feito com carinho — músicas, flores e memórias nossas."
+    />
+    <title>Músicas e Flores 💕</title>
 
-      </ul>
-      <div id="social-links">
-        <a href="#" id="draw-heart-button"> 
-          <ion-icon name="heart-outline"></ion-icon>
-        </a>
-      <canvas id="heartCanvas" style="position: fixed; top: 0; left: 0; pointer-events: none;"></canvas>
-      </div>
-      <footer>
-        Feito com ♥ <a href="#"></a>
-      </footer>
-    </div>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="./script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="src/css/base.css" />
+    <link rel="stylesheet" href="src/css/layout.css" />
+    <link rel="stylesheet" href="src/css/components.css" />
+    <link rel="stylesheet" href="src/css/animations.css" />
+    <link rel="stylesheet" href="src/css/responsive.css" />
+
+    <!-- aplica o tema antes da página pintar (evita "flash") -->
+    <script src="src/js/theme.js"></script>
+  </head>
+
+  <body>
+    <div id="petals" class="petals" aria-hidden="true"></div>
+    <canvas id="heartCanvas" aria-hidden="true"></canvas>
+
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Mudar tema">🌙</button>
+    <button id="saudade-toggle" class="saudade-toggle" type="button" aria-pressed="false">
+      Modo saudade 🌙
+    </button>
+    <button id="gift-egg" class="gift-egg" type="button" aria-label="Um presentinho escondido">🎁</button>
+    <p id="saudade-phrase" class="saudade-phrase" aria-hidden="true"></p>
+
+    <!-- Navegação por pontos -->
+    <nav class="dotnav" aria-label="Navegação da jornada">
+      <a href="#inicio" data-label="Início" class="is-active" aria-label="Início"></a>
+      <a href="#carta" data-label="Carta" aria-label="Carta"></a>
+      <a href="#jornada" data-label="Nossa jornada" aria-label="Nossa jornada"></a>
+      <a href="#memorias" data-label="Memórias" aria-label="Memórias"></a>
+      <a href="#musica" data-label="Nossa música" aria-label="Nossa música"></a>
+      <a href="#abrir-quando" data-label="Abrir quando" aria-label="Abrir quando"></a>
+      <a href="#motivos" data-label="Motivos" aria-label="Motivos"></a>
+      <a href="#jardim-final" data-label="Jardim" aria-label="Jardim"></a>
+    </nav>
+
+    <!-- 1. ABERTURA -->
+    <header class="hero" id="inicio">
+      <img class="hero__photo" src="assets/beijinho.jpg" alt="Foto nossa, juntinhos" />
+      <p class="hero__kicker">Tenho uma coisa pra te mostrar...</p>
+      <h1>Músicas &amp; Flores</h1>
+      <p class="hero__subtitle">
+        Um presente que você pode abrir sempre que quiser lembrar da gente. 💗
+      </p>
+      <a class="btn btn--lg" id="open-gift" href="#carta">Abrir meu presente 🎁</a>
+      <p class="hero__scroll">role para baixo ↓</p>
+    </header>
+
+    <main>
+      <!-- 2. CARTA -->
+      <section class="section reveal" id="carta">
+        <div class="wrap">
+          <h2 class="section__title">Uma carta pra você</h2>
+          <p class="section__subtitle">Tem uma mensagem guardada aqui dentro. Toca no envelope. 💌</p>
+
+          <div id="envelope" class="envelope" role="button" tabindex="0" aria-expanded="false" aria-label="Abrir a carta">
+            <div class="envelope__visual">
+              <div class="envelope__flap"></div>
+              <span class="envelope__heart" aria-hidden="true">💖</span>
+            </div>
+            <p class="envelope__hint">Clique para abrir</p>
+            <div class="letter-panel">
+              <div class="letter__paper"><p class="letter__text"></p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- 3. NOSSA JORNADA (timeline) -->
+      <section class="section reveal" id="jornada">
+        <div class="wrap">
+          <h2 class="section__title">Nossa jornada</h2>
+          <p class="section__subtitle">Um pedacinho da nossa história, na ordem em que aconteceu.</p>
+          <div class="timeline" id="timeline"></div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- 4. NOSSAS MEMÓRIAS (galeria polaroid) -->
+      <section class="section reveal" id="memorias">
+        <div class="wrap">
+          <h2 class="section__title">Nossas memórias</h2>
+          <p class="section__subtitle">Toca em qualquer foto ou vídeo para ver maior.</p>
+          <div class="gallery" id="gallery"></div>
+          <a class="btn btn--ghost" href="Spotfy/index.html" target="_blank" rel="noopener">
+            Ver o álbum completo 📸
+          </a>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- 5. NOSSA MÚSICA -->
+      <section class="section reveal" id="musica">
+        <div class="wrap">
+          <h2 class="section__title">Nossa música</h2>
+          <p class="section__subtitle">Aperta o play e lembra da gente. 🎵</p>
+          <div class="music-card">
+            <div class="music-card__disc" aria-hidden="true"></div>
+            <p class="music-card__phrase">A música que virou nossa</p>
+            <iframe
+              title="Nossa música no Spotify"
+              src="https://open.spotify.com/embed/track/07DskqQ1NbTiotX1WIV7ob?si=63a8bf1837e2406f"
+              width="380" height="152" frameborder="0" loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- 6. ABRIR QUANDO -->
+      <section class="section reveal" id="abrir-quando">
+        <div class="wrap">
+          <h2 class="section__title">Abrir quando...</h2>
+          <p class="section__subtitle">Bilhetinhos pra cada momento. Abre o que combina com agora. 💌</p>
+          <div class="openwhen-grid" id="openwhen"></div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- 7. CAIXA DE LEMBRANÇAS -->
+      <section class="section reveal" id="lembrancas">
+        <div class="wrap">
+          <h2 class="section__title">Caixa de lembranças</h2>
+          <p class="section__subtitle">Pequenos guardados nossos. Toca pra abrir cada um. 🎁</p>
+          <div class="membox" id="membox"></div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- 8. MOTIVOS -->
+      <section class="section reveal" id="motivos">
+        <div class="wrap">
+          <h2 class="section__title">Motivos pra te amar</h2>
+          <p class="section__subtitle">Toca num card pra virar — ou pede um motivo aleatório.</p>
+          <div class="reasons-grid" id="reasons"></div>
+          <p><button id="reason-random-btn" class="btn" type="button">Me dá um motivo aleatório 💞</button></p>
+          <p id="reason-random" class="reason-random" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- 9. PROMESSAS -->
+      <section class="section reveal" id="promessas">
+        <div class="wrap">
+          <h2 class="section__title">Promessas pequenas</h2>
+          <p class="section__subtitle">Coisas que eu prometo de verdade, sem dramatizar. 🤍</p>
+          <div class="postits" id="promises"></div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- 10. MINI QUIZ -->
+      <section class="section reveal" id="quiz-sec">
+        <div class="wrap">
+          <h2 class="section__title">Mini quiz do casal</h2>
+          <p class="section__subtitle">Não tem como errar. (De propósito.) 😄</p>
+          <div id="quiz"></div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- 11. PERGUNTA FINAL -->
+      <section class="section reveal" id="pergunta">
+        <div class="wrap" id="finalq">
+          <h2 class="section__title">Uma última pergunta</h2>
+          <p id="finalq-question" class="section__subtitle"></p>
+          <div id="finalq-buttons" class="finalq__buttons"></div>
+          <p id="finalq-result" class="finalq__result" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <!-- 12. JARDIM FINAL -->
+      <section class="section reveal" id="jardim-final">
+        <div class="wrap">
+          <h2 class="section__title">Nosso jardim</h2>
+          <p class="section__subtitle">Cada coisinha que você abriu fez nascer uma flor aqui. 🌷</p>
+          <div class="garden" id="garden"></div>
+          <p class="garden__count" id="garden-count"></p>
+          <p class="final__phrase">E que a gente floresça junto, pra sempre. 🌹</p>
+          <p>Te amo, Sabrina. ❤️</p>
+          <p><button id="back-top" class="btn btn--ghost" type="button" hidden>Voltar ao início ↑</button></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      Feito com ♥ por nós · <span id="year">2025</span>
+      <button id="secret-heart" class="secret-heart" type="button" aria-label="Um segredinho">♡</button>
+    </footer>
+
+    <!-- dados editáveis -->
+    <script src="data/messages.js"></script>
+    <script src="data/memories.js"></script>
+
+    <!-- motor da experiência (scripts puros, funcionam abrindo o arquivo localmente) -->
+    <script src="src/js/app.js"></script>
+    <script src="src/js/garden.js"></script>
+    <script src="src/js/heart.js"></script>
+    <script src="src/js/saudade.js"></script>
+    <script src="src/js/letter.js"></script>
+    <script src="src/js/gallery.js"></script>
+    <script src="src/js/memories.js"></script>
+    <script src="src/js/surprises.js"></script>
+    <script src="src/js/final.js"></script>
+    <script src="src/js/easter.js"></script>
   </body>
 </html>
-

@@ -61,17 +61,24 @@
       button:hover {
         background-color: #e6be8a;
       }
-      textarea {
-        width: 80%;
-        height: 166px;
+      .love-letter {
+        white-space: pre-line;
+        text-align: left;
+        max-width: 640px;
+        margin: 18px auto;
+        padding: 22px 26px;
         border: 2px solid #ffd700;
-        border-radius: 1.3px;
-        padding: 10px;
-        font-size: 1.3em;
-        resize: none;
-        margin-top: 10px;
+        border-radius: 16px;
+        font-size: 1.05em;
+        line-height: 1.7;
         background-color: #fff8dc;
         color: #6d4c41;
+        box-shadow: 3px 3px 12px rgba(255, 215, 0, 0.4);
+      }
+      .upload-hint {
+        margin-top: 20px;
+        font-size: 0.95em;
+        color: #ffe9a8;
       }
       .spotify-box {
         margin-top: 20px;
@@ -118,8 +125,9 @@
           font-size: 0.9em;
           padding: 8px 16px;
         }
-        textarea {
-          width: 90%;
+        .love-letter {
+          font-size: 1em;
+          padding: 18px 18px;
         }
         .spotify-box {
           width: 100%;
@@ -139,9 +147,9 @@
           font-size: 0.8em;
           padding: 6px 12px;
         }
-        textarea {
-          width: 95%;
-          font-size: 0.9em;
+        .love-letter {
+          font-size: 0.95em;
+          padding: 16px 16px;
         }
         .daisies {
           width: 60px;
@@ -168,138 +176,125 @@
     />
 
     <h1>Nosso Álbum de Fotos 💛</h1>
-    <textarea
-      id="message"
-      placeholder="Oie, meu amor! Tudo bem?
-    Quero que você saiba que o meu maior desejo é te dar o mundo inteiro. E, se eu não puder dar, então quero conquistá-lo com você — explorar cada pedacinho dele ao seu lado, sendo inteiramente seu, e completamente feliz por estar vivendo tudo isso com você.
 
-    Quero te dar a melhor vida possível. Quero te ter sempre comigo, viver cada momento com você ao meu lado. Tudo o que acontece comigo, de alguma forma, sempre me faz lembrar de você. Ainda não sei como expressar todo o amor que sinto, mas espero um dia conseguir demonstrar tudo isso com gestos, palavras e atitudes.
+    <div class="love-letter">Oie, meu amor! Tudo bem?
+Quero que você saiba que o meu maior desejo é te dar o mundo inteiro. E, se eu não puder dar, então quero conquistá-lo com você — explorar cada pedacinho dele ao seu lado, sendo inteiramente seu, e completamente feliz por estar vivendo tudo isso com você.
 
-    Sabrina Magalhães, meu grande amor, o amor da minha vida. Já são 607 dias juntos, e mesmo assim, preciso te perguntar de novo:
-    Você aceita namorar comigo?
+Quero te dar a melhor vida possível. Quero te ter sempre comigo, viver cada momento com você ao meu lado. Tudo o que acontece comigo, de alguma forma, sempre me faz lembrar de você. Ainda não sei como expressar todo o amor que sinto, mas espero um dia conseguir demonstrar tudo isso com gestos, palavras e atitudes.
 
-    Aceita continuar vivendo esse namoro à distância, mesmo sabendo que eu sou lerdo, chato, emburrado?
+Sabrina Magalhães, meu grande amor, o amor da minha vida. Já são 607 dias juntos, e mesmo assim, preciso te perguntar de novo:
+Você aceita namorar comigo?
 
-    Quero passar por tudo com você ao meu lado. E em cada momento, reforçar, viver e sentir que eu te amo cada vez mais.
-    
-    Amores de domingo são bonitos, mas
-    o nosso amor é pro cansaço da segunda,
-    pra estranheza da terça,
-    pra ansiedade da quarta,
-    pra animação da quinta,
-    pra felicidade da sexta,
-    pras loucuras do sábado
-    e pro sossego do domingo.
-    
-    
-    Eu te amo, meu amor.💌
-    Feliz dias dos namorados atrasados
-    Feliz nosso dia adiantado
-    E feliz vida, por estar ao seu lado ❤"
-    ></textarea>
-    <br />
+Aceita continuar vivendo esse namoro à distância, mesmo sabendo que eu sou lerdo, chato, emburrado?
+
+Quero passar por tudo com você ao meu lado. E em cada momento, reforçar, viver e sentir que eu te amo cada vez mais.
+
+Amores de domingo são bonitos, mas
+o nosso amor é pro cansaço da segunda,
+pra estranheza da terça,
+pra ansiedade da quarta,
+pra animação da quinta,
+pra felicidade da sexta,
+pras loucuras do sábado
+e pro sossego do domingo.
+
+Eu te amo, meu amor. 💌
+Feliz dia dos namorados atrasados,
+feliz nosso dia adiantado,
+e feliz vida, por estar ao seu lado. ❤</div>
+
+    <p class="upload-hint">Quer guardar mais uma foto aqui? 💛</p>
     <input type="file" id="fileInput" accept="image/*" />
     <button onclick="uploadImage()">📸 Enviar Foto</button>
     <div class="gallery" id="gallery"></div>
 
     <!-- Exemplos de imagens já carregadas na galeria -->
     <div class="gallery">
-      <img src="Imagens/MeuAmor/IMG_20250323_031445_548.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20250323_031445_548.webp" />
       <video
         src="Imagens/MeuAmor/VID-20231015-WA0029.mp4"
-        autoplay
-        muted
-        loop
+        controls
+        preload="metadata"
       ></video>
-      <img src="Imagens/MeuAmor/IMG_20231020_230130_598.webp" />
-      <img src="Imagens/MeuAmor/Screenshot_20240304-080521.png" />
-      <img src="Imagens/MeuAmor/IMG_20240213_211925_641.webp" />
-      <img src="Imagens/MeuAmor/IMG-20240415-WA0029~2.jpg" />
-      <img src="Imagens/MeuAmor/IMG_20231020_230101_960.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20231020_230130_598.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/Screenshot_20240304-080521.png" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20240213_211925_641.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG-20240415-WA0029~2.jpg" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20231020_230101_960.webp" />
       <video
         src="Imagens/MeuAmor/VID_20250504_115051_274.mp4"
-        autoplay
-        muted
-        loop
+        controls
+        preload="metadata"
       ></video>
-      <img src="Imagens/MeuAmor/20241102_170313.jpg" />
-      <img src="Imagens/MeuAmor/IMG_20231020_230302_824.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/20241102_170313.jpg" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20231020_230302_824.webp" />
       <video
         src="Imagens/MeuAmor/VID_20250315_180852_695.mp4"
-        autoplay
-        muted
-        loop
+        controls
+        preload="metadata"
       ></video>
-      <img src="Imagens/MeuAmor/IMG_20240707_003145_268.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20240707_003145_268.webp" />
       <video
         src="Imagens/MeuAmor/VID-20240414-WA0041.mp4"
-        autoplay
-        muted
-        loop
+        controls
+        preload="metadata"
       ></video>
-      <img src="Imagens/MeuAmor/IMG_20250420_195334_363.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20250420_195334_363.webp" />
       <video
         src="Imagens/MeuAmor/VID_20250512_150034_510.mp4"
-        autoplay
-        muted
-        loop
+        controls
+        preload="metadata"
       ></video>
-      <img src="Imagens/MeuAmor/IMG_20231020_230203_484.webp" />
-      <img src="Imagens/MeuAmor/IMG_20250420_195536_219.webp" />
-      <img src="Imagens/MeuAmor/IMG_20231020_230331_715.webp" />
-      <img src="Imagens/MeuAmor/IMG_20231231_175205_986.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20231020_230203_484.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20250420_195536_219.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20231020_230331_715.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20231231_175205_986.webp" />
       <img
         src="Imagens/MeuAmor/Screenshot_2024-01-01-21-08-25-935_com.instagram.android.jpg"
       />
       <video
         src="Imagens/MeuAmor/VID_20250504_114918_046.mp4"
-        autoplay
-        muted
-        loop
+        controls
+        preload="metadata"
       ></video>
-      <img src="Imagens/MeuAmor/IMG_20240601_221006_003.webp" />
-      <img src="Imagens/MeuAmor/IMG_20241102_171050_099~2.jpg" />
-      <img src="Imagens/MeuAmor/IMG-20240415-WA0028.jpg" />
-      <img src="Imagens/MeuAmor/20250420_111455.jpg" />
-      <img src="Imagens/MeuAmor/IMG_20231020_230302_824.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20240601_221006_003.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20241102_171050_099~2.jpg" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG-20240415-WA0028.jpg" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/20250420_111455.jpg" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20231020_230302_824.webp" />
       <video
         src="Imagens/MeuAmor/VID_20250118_172108_336.mp4"
-        autoplay
-        muted
-        loop
+        controls
+        preload="metadata"
       ></video>
-      <img src="Imagens/MeuAmor/IMG_20240601_221030_552.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20240601_221030_552.webp" />
       <video
         src="Imagens/MeuAmor/VID_31521223_133938_337.mp4"
-        autoplay
-        muted
-        loop
+        controls
+        preload="metadata"
       ></video>
-      <img src="Imagens/MeuAmor/IMG_20240915_010603_632.webp" />
-      <img src="Imagens/MeuAmor/IMG_20250420_195400_156~2.jpg" />
-      <img src="Imagens/MeuAmor/20250608_001615.jpg" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20240915_010603_632.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20250420_195400_156~2.jpg" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/20250608_001615.jpg" />
       <video
         src="Imagens/MeuAmor/VID-20231015-WA0029.mp4"
-        autoplay
-        muted
-        loop
+        controls
+        preload="metadata"
       ></video>
-      <img src="Imagens/MeuAmor/20250419_121703.jpg" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/20250419_121703.jpg" />
       <video
         src="Imagens/MeuAmor/VID_129940216_024341_860.mp4"
-        autoplay
-        muted
-        loop
+        controls
+        preload="metadata"
       ></video>
-      <img src="Imagens/MeuAmor/IMG_20250315_210158_691.webp" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20250315_210158_691.webp" />
       <video
         src="Imagens/MeuAmor/VID_20250323_001603_638.mp4"
-        autoplay
-        muted
-        loop
+        controls
+        preload="metadata"
       ></video>
-      <img src="Imagens/MeuAmor/Screenshot_20250612_083333_Photos.jpg" />
-      <img src="Imagens/MeuAmor/IMG_20250504_144844_971(1).jpg" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/Screenshot_20250612_083333_Photos.jpg" />
+      <img loading="lazy" alt="Nossa memória" src="Imagens/MeuAmor/IMG_20250504_144844_971(1).jpg" />
     </div>
 
     <div class="spotify-box">

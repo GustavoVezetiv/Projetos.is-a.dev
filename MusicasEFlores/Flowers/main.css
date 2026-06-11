@@ -610,8 +610,8 @@ body {
   border-top-left-radius: 100%;
   border-left: 2vmin solid #217005;
   background-image: linear-gradient(to bottom, transparent, var(--dark-color) 60%);
- -webkit-mask
-  -webkit-mask-image: linear-gradient(to top,transparent 30%,#24803e 60% );
+  -webkit-mask-image: linear-gradient(to top, transparent 30%, #24803e 60%);
+          mask-image: linear-gradient(to top, transparent 30%, #24803e 60%);
 }
 .flower__g-right--1 {
   -webkit-animation: flower-g-right-ans 2.5s linear infinite;
@@ -1337,46 +1337,40 @@ body {
           animation-play-state: paused !important;
 }
 .valentines-text {
-  position: absolute;
-  width: 380px;
-  height: 100px;
-  padding: 20px;
-  color: white;
+  position: fixed;
+  top: 6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(380px, 86vw);
+  padding: 16px 22px;
+  color: #fff;
   border-radius: 20px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   text-align: center;
-  animation: fadeInUp 2s ease-out;
-  transform: translateX(100%);
+  z-index: 9999;
+  animation: fadeInDown 2s ease-out backwards;
 }
 
 .valentines-text h2 {
-  font-size: 28px;
+  font-size: clamp(1.4rem, 5vw, 1.8rem);
   text-shadow: 0 0 10px #ffb6c1;
 }
 
 .valentines-text p {
-  font-size: 18px;
+  margin-top: 4px;
+  font-size: clamp(0.95rem, 3.4vw, 1.1rem);
   color: #ffc0cb;
 }
 
-.right {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  z-index: 9999;
-}
-
-@keyframes fadeInUp {
+@keyframes fadeInDown {
   from {
-    opacity: 20000;
-    transform: translateX(30vh);
-
+    opacity: 0;
+    transform: translate(-50%, -24px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
 }

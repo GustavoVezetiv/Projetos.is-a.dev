@@ -211,11 +211,13 @@ body {
 .shadow {
   position: absolute;
   width: 380px;
+  max-width: 86vw;
   height: 25px;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.3);
-  top: 500px;
-  left: 35.6%;
+  top: 78vh;
+  left: 50%;
+  margin-left: -190px;
   animation: scale 3s linear infinite;
   z-index: -1;
 }
@@ -226,5 +228,15 @@ body {
   }
   50% {
     transform: scaleX(0.85);
+  }
+}
+
+/* telas bem pequenas: reduz o conjunto para não estourar */
+@media (max-width: 360px) {
+  .container {
+    transform: scale(0.82);
+  }
+  .shadow {
+    margin-left: -156px;
   }
 }

@@ -1,0 +1,257 @@
+/* =========================================================
+   layout.css — jornada, seções, navegação, timeline, jardim
+   ========================================================= */
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 84px 0;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.section__title {
+  margin-bottom: 8px;
+}
+
+.section__subtitle {
+  margin: 0 auto 38px;
+  max-width: 48ch;
+  font-size: 1.05rem;
+}
+
+/* divisória fofa entre seções */
+.divider {
+  font-size: 1.2rem;
+  color: var(--accent-2);
+  letter-spacing: 0.5em;
+  opacity: 0.7;
+  margin: 0 auto;
+}
+
+/* ---------- Hero / presente ---------- */
+.hero {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 90px 24px 70px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero__photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--card-bg);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+
+.hero__kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.34em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.hero__subtitle {
+  max-width: 40ch;
+  margin: 0 auto 32px;
+  font-size: 1.15rem;
+}
+
+.hero__scroll {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: var(--text-soft);
+  opacity: 0.8;
+}
+
+/* ---------- Navegação por pontos (lateral) ---------- */
+.dotnav {
+  position: fixed;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dotnav a {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--card-border);
+  border: 1px solid var(--accent-2);
+  transition: transform 0.2s ease, background 0.2s ease;
+  position: relative;
+}
+
+.dotnav a:hover,
+.dotnav a.is-active {
+  background: var(--accent);
+  transform: scale(1.4);
+}
+
+/* rótulo ao passar o mouse */
+.dotnav a::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-size: 0.72rem;
+  color: var(--text);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 3px 8px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.dotnav a:hover::after {
+  opacity: 1;
+}
+
+/* ---------- Timeline / Nossa jornada ---------- */
+.timeline {
+  position: relative;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* linha central */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 22px;
+  width: 3px;
+  background: linear-gradient(var(--accent-2), var(--lavender));
+  border-radius: 3px;
+}
+
+.tl-item {
+  position: relative;
+  padding: 0 0 26px 64px;
+}
+
+.tl-item__dot {
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 2px solid var(--accent);
+  font-size: 1rem;
+  z-index: 1;
+}
+
+/* desktop: alterna os lados */
+@media (min-width: 760px) {
+  .timeline::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .tl-item {
+    width: 50%;
+    padding: 0 40px 34px 40px;
+  }
+  .tl-item:nth-child(odd) {
+    left: 0;
+    text-align: right;
+  }
+  .tl-item:nth-child(even) {
+    left: 50%;
+  }
+  .tl-item__dot {
+    left: auto;
+    right: -16px;
+  }
+  .tl-item:nth-child(even) .tl-item__dot {
+    left: -16px;
+    right: auto;
+  }
+}
+
+/* ---------- Jardim final ---------- */
+.garden {
+  position: relative;
+  min-height: 220px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  padding: 24px 0 8px;
+}
+
+.garden__count {
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  margin-top: 6px;
+}
+
+/* ---------- Final ---------- */
+.final__phrase {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(1.9rem, 7vw, 3rem);
+  color: var(--heading);
+  max-width: 24ch;
+  margin: 0 auto 18px;
+  line-height: 1.2;
+}
+
+.footer {
+  text-align: center;
+  padding: 30px 24px 46px;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  position: relative;
+  z-index: 1;
+}
+
+/* pétalas flutuantes */
+.petals {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero,
+main,
+.footer {
+  position: relative;
+  z-index: 1;
+}

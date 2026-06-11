@@ -1,0 +1,802 @@
+/* =========================================================
+   components.css — todos os componentes da jornada
+   ========================================================= */
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  min-height: 48px; /* boa área de toque */
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  filter: brightness(1.05);
+}
+.btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+.btn--ghost {
+  background: var(--card-bg);
+  color: var(--accent);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(6px);
+}
+.btn--lg {
+  padding: 18px 40px;
+  font-size: 1.1rem;
+}
+
+/* ---------- Botão de tema (dia/noite) ---------- */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 60;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  color: var(--heading);
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s ease, background 0.4s ease;
+}
+.theme-toggle:hover {
+  transform: rotate(-15deg) scale(1.08);
+}
+
+/* ---------- Botão "Modo saudade" ---------- */
+.saudade-toggle {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  min-height: 44px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  color: var(--heading);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+.saudade-toggle:hover {
+  transform: translateY(-2px);
+}
+
+/* frase do modo saudade */
+.saudade-phrase {
+  position: fixed;
+  left: 50%;
+  bottom: 78px;
+  transform: translateX(-50%);
+  z-index: 60;
+  max-width: 90vw;
+  text-align: center;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.5rem;
+  color: #e9e4ff;
+  text-shadow: 0 0 16px rgba(157, 140, 255, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+body.saudade .saudade-phrase {
+  opacity: 1;
+}
+
+/* ---------- Canvas do coração (overlay) ---------- */
+#heartCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 55;
+}
+
+/* ---------- Carta / envelope ---------- */
+.envelope {
+  --env-w: min(320px, 82vw);
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  perspective: 900px;
+}
+.envelope__visual {
+  position: relative;
+  width: var(--env-w);
+  height: calc(var(--env-w) * 0.62);
+  margin: 0 auto;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.envelope__visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  clip-path: polygon(0 100%, 50% 45%, 100% 100%);
+  opacity: 0.9;
+}
+.envelope__flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: calc(var(--env-w) / 2) solid transparent;
+  border-right: calc(var(--env-w) / 2) solid transparent;
+  border-top: calc(var(--env-w) * 0.4) solid var(--accent);
+  filter: brightness(0.96);
+  transform-origin: top;
+  transition: transform 0.6s ease, opacity 0.4s ease 0.2s;
+  z-index: 4;
+}
+.envelope__heart {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.9rem;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+.envelope__hint {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+}
+.letter-panel {
+  max-width: 520px;
+  margin: 18px auto 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: max-height 0.7s ease, opacity 0.5s ease, transform 0.5s ease,
+    margin 0.5s ease;
+}
+.letter__paper {
+  background: var(--cream);
+  color: var(--ink-on-paper);
+  border-radius: 14px;
+  padding: 26px 26px 30px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+.letter__text {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  min-height: 1.6em;
+  white-space: pre-line;
+  color: #4a2230;
+}
+.caret {
+  display: inline-block;
+  width: 2px;
+  margin-left: 1px;
+  background: var(--accent);
+  animation: blink 1s steps(1) infinite;
+  vertical-align: text-bottom;
+}
+.envelope.is-open .envelope__flap {
+  transform: rotateX(170deg);
+  opacity: 0;
+}
+.envelope.is-open .envelope__heart {
+  opacity: 0;
+}
+.envelope.is-open .letter-panel {
+  max-height: 900px;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 22px;
+}
+
+/* ---------- Galeria polaroid ---------- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+}
+.polaroid {
+  background: var(--cream);
+  padding: 10px 10px 0;
+  border-radius: 4px;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  border: 0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.polaroid:nth-child(3n) {
+  transform: rotate(-2deg);
+}
+.polaroid:nth-child(3n + 1) {
+  transform: rotate(1.5deg);
+}
+.polaroid:hover,
+.polaroid:focus-visible {
+  transform: translateY(-5px) rotate(0deg);
+  box-shadow: var(--shadow);
+}
+.polaroid__media {
+  display: block;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #e9e0d4;
+}
+.polaroid__media img,
+.polaroid__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.polaroid__media--video::after {
+  content: "▶";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding-left: 3px;
+}
+.polaroid__cap {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.1rem;
+  color: #4a2230;
+  padding: 6px 4px 12px;
+  min-height: 2.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ---------- Modal compartilhado ---------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20, 5, 15, 0.82);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+.modal__inner {
+  position: relative;
+  max-width: 92vw;
+  max-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal__media img,
+.modal__media video {
+  max-width: 92vw;
+  max-height: 76vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+/* conteúdo de texto dentro do modal (open-when, lembrança, etc.) */
+.modal__card {
+  background: var(--cream);
+  color: var(--ink-on-paper);
+  border-radius: 18px;
+  padding: 34px 30px;
+  max-width: 460px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+.modal__card h3 {
+  color: #b03a68;
+  margin-bottom: 12px;
+}
+.modal__card p {
+  color: #4a2230;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+.modal__caption {
+  color: #fff;
+  text-align: center;
+  margin-top: 12px;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.2rem;
+}
+.modal__close {
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: #b03a68;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- Nossa música ---------- */
+.music-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 28px 26px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  max-width: 100%;
+}
+.music-card__disc {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, #fff 0 14%, var(--accent) 15% 22%, #2a1020 23% 100%);
+  position: relative;
+  box-shadow: inset 0 0 0 6px rgba(255, 255, 255, 0.06), var(--shadow-soft);
+  animation: spin 6s linear infinite;
+}
+.music-card__disc::after {
+  content: "♪";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-2);
+  font-size: 1.4rem;
+}
+.music-card__phrase {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.4rem;
+  color: var(--heading);
+}
+.music-card iframe {
+  border-radius: 12px;
+  width: min(380px, 78vw);
+  border: 0;
+}
+
+/* ---------- Abrir quando ---------- */
+.openwhen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.openwhen-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  padding: 20px 22px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-soft);
+  font: inherit;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.openwhen-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+.openwhen-card__emoji {
+  font-size: 1.6rem;
+}
+
+/* ---------- Motivos (cards que viram) ---------- */
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.flip-card {
+  perspective: 800px;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  aspect-ratio: 3 / 4;
+  font: inherit;
+}
+.flip-card__inner {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+.flip-card.is-flipped .flip-card__inner {
+  transform: rotateY(180deg);
+}
+.flip-card__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+}
+.flip-card__front {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.4rem;
+}
+.flip-card__back {
+  background: var(--cream);
+  color: var(--ink-on-paper);
+  transform: rotateY(180deg);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+.reason-random {
+  min-height: 64px;
+  max-width: 46ch;
+  margin: 0 auto;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
+  font-family: "Dancing Script", cursive;
+  font-size: 1.5rem;
+  color: var(--heading);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.reason-random.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Promessas (post-its) ---------- */
+.postits {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 22px;
+}
+.postit {
+  position: relative;
+  padding: 26px 18px 22px;
+  background: #fff6a8;
+  color: #5b4a14;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  box-shadow: var(--shadow-soft);
+  text-align: left;
+}
+.postit:nth-child(2n) {
+  background: #ffd6e6;
+  color: #6a2742;
+  transform: rotate(-2deg);
+}
+.postit:nth-child(3n) {
+  background: #d8ccff;
+  color: #3f2a6a;
+  transform: rotate(1.5deg);
+}
+.postit::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-4deg);
+  width: 70px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------- Caixa de lembranças ---------- */
+.membox {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+}
+.membox-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 22px 14px;
+  border: 1px dashed var(--card-border);
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.membox-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-soft);
+}
+.membox-item__emoji {
+  font-size: 2rem;
+}
+
+/* ---------- Mini quiz ---------- */
+.quiz-card {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 30px 26px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(6px);
+}
+.quiz__q {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.7rem;
+  color: var(--heading);
+  margin-bottom: 18px;
+}
+.quiz__options {
+  display: grid;
+  gap: 10px;
+}
+.quiz__opt {
+  padding: 12px 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--cream);
+  color: var(--ink-on-paper);
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+.quiz__opt:hover {
+  transform: translateY(-2px);
+}
+.quiz__opt.is-chosen {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.quiz__feedback {
+  margin-top: 16px;
+  min-height: 1.4em;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+/* ---------- Pergunta final ---------- */
+.finalq__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  position: relative;
+  min-height: 60px;
+}
+.btn--shy {
+  transition: transform 0.25s ease;
+}
+.finalq__result {
+  margin-top: 24px;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.7rem;
+  color: var(--heading);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.finalq__result.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Flores do jardim ---------- */
+.g-flower {
+  position: relative;
+  width: 44px;
+  height: 92px;
+  transform-origin: bottom center;
+  animation: grow-up 0.7s ease backwards;
+}
+.g-flower__stem {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 4px;
+  height: 56px;
+  transform: translateX(-50%);
+  background: linear-gradient(to top, #2f7d4f, #57b06f);
+  border-radius: 3px;
+}
+.g-flower__stem::before {
+  content: "";
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 16px;
+  height: 9px;
+  background: #57b06f;
+  border-radius: 0 100% 0 100%;
+  transform: translateX(0) rotate(-20deg);
+}
+.g-flower__bloom {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 -12px 0 -4px var(--accent), 0 12px 0 -4px var(--accent),
+    -12px 0 0 -4px var(--accent), 12px 0 0 -4px var(--accent);
+}
+.g-flower__bloom::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  background: #ffe08a;
+}
+.g-flower:nth-child(4n) .g-flower__bloom {
+  background: var(--lavender);
+  box-shadow: 0 -12px 0 -4px var(--lavender), 0 12px 0 -4px var(--lavender),
+    -12px 0 0 -4px var(--lavender), 12px 0 0 -4px var(--lavender);
+}
+.g-flower:nth-child(4n + 2) .g-flower__bloom {
+  background: #ff9ec2;
+  box-shadow: 0 -12px 0 -4px #ff9ec2, 0 12px 0 -4px #ff9ec2,
+    -12px 0 0 -4px #ff9ec2, 12px 0 0 -4px #ff9ec2;
+}
+.g-flower:nth-child(4n + 3) .g-flower__bloom {
+  background: var(--gold);
+  box-shadow: 0 -12px 0 -4px var(--gold), 0 12px 0 -4px var(--gold),
+    -12px 0 0 -4px var(--gold), 12px 0 0 -4px var(--gold);
+}
+
+/* ---------- Chuva de corações ---------- */
+.rain-heart {
+  position: fixed;
+  top: -5vh;
+  z-index: 90;
+  font-size: 1.4rem;
+  pointer-events: none;
+  animation: rain-fall linear forwards;
+}
+
+/* ---------- Easter eggs ---------- */
+.secret-heart {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  opacity: 0.5;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.secret-heart:hover {
+  opacity: 1;
+  transform: scale(1.3);
+}
+.gift-egg {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  opacity: 0.7;
+}
+.gift-egg:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ---------- Conteúdo dos itens da timeline ---------- */
+.tl-item__title {
+  margin-bottom: 0;
+}
+.tl-item__date {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.tl-item__photo {
+  width: 100%;
+  max-width: 240px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+  margin: 6px 0 10px;
+}
+.tl-item__text {
+  font-size: 0.98rem;
+  color: var(--text-soft);
+}
+@media (min-width: 760px) {
+  .tl-item:nth-child(odd) .tl-item__photo {
+    margin-left: auto;
+  }
+}
+
+/* ---------- Helper: revelar ao rolar ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

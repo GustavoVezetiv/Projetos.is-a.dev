@@ -1,0 +1,169 @@
+/* =========================================================
+   base.css — reset, variáveis de tema e tipografia
+   Temas: claro (dia) · escuro (noite) · saudade (noturno estrelado)
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---------- Tema claro (dia) — padrão ---------- */
+:root {
+  --bg: #ffe9f0;
+  --bg-grad: linear-gradient(160deg, #fff6f3 0%, #ffe9f0 48%, #f1e9ff 100%);
+  --cream: #fffaf3;
+  --text: #4a2230;
+  --text-soft: #8a6472;
+  --heading: #b03a68;
+  --accent: #e26d9b;
+  --accent-2: #f4a9c7;
+  --gold: #cf9f55;
+  --lavender: #c9b8ee;
+  --card-bg: rgba(255, 255, 255, 0.74);
+  --card-border: rgba(200, 120, 150, 0.2);
+  --ink-on-paper: #4a2230;
+  --shadow: 0 14px 34px rgba(190, 90, 130, 0.18);
+  --shadow-soft: 0 6px 18px rgba(190, 90, 130, 0.12);
+  --petal: rgba(226, 109, 155, 0.5);
+  --star-opacity: 0;
+  --radius: 20px;
+  --maxw: 760px;
+}
+
+/* ---------- Tema escuro (noite) ---------- */
+[data-theme="dark"] {
+  --bg: #1c1230;
+  --bg-grad: linear-gradient(160deg, #1c1230 0%, #2a1640 50%, #3a1c3e 100%);
+  --cream: #fffaf3;
+  --text: #f3e4ee;
+  --text-soft: #cfa9c2;
+  --heading: #ff9ec2;
+  --accent: #ff6fa3;
+  --accent-2: #ffa9c9;
+  --gold: #e7c272;
+  --lavender: #b9a6ec;
+  --card-bg: rgba(255, 255, 255, 0.07);
+  --card-border: rgba(255, 158, 194, 0.26);
+  --ink-on-paper: #4a2230;
+  --shadow: 0 16px 38px rgba(0, 0, 0, 0.48);
+  --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.38);
+  --petal: rgba(255, 158, 194, 0.55);
+  --star-opacity: 0;
+}
+
+/* ---------- Modo saudade (noturno estrelado) ---------- */
+body.saudade {
+  --bg-grad: linear-gradient(180deg, #050217 0%, #0d1030 45%, #241246 100%);
+  --text: #e9e4ff;
+  --text-soft: #b9b2e6;
+  --heading: #cdb8ff;
+  --accent: #9d8cff;
+  --accent-2: #c2b4ff;
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --card-border: rgba(180, 170, 255, 0.3);
+  --petal: rgba(190, 180, 255, 0.5);
+  --star-opacity: 1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg-grad) fixed;
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.8s ease, color 0.5s ease;
+  overflow-x: hidden;
+}
+
+/* campo de estrelas (visível só no modo saudade) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--star-opacity);
+  transition: opacity 0.8s ease;
+  background-image: radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 70% 20%, #fff, transparent),
+    radial-gradient(1px 1px at 40% 70%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 85% 60%, #fff, transparent),
+    radial-gradient(1px 1px at 15% 80%, #fff, transparent),
+    radial-gradient(1px 1px at 55% 45%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 90% 90%, #fff, transparent),
+    radial-gradient(1px 1px at 33% 15%, #fff, transparent);
+  background-repeat: repeat;
+  background-size: 100% 100%;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Dancing Script", "Brush Script MT", cursive;
+  color: var(--heading);
+  line-height: 1.12;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(2.8rem, 9vw, 4.6rem);
+}
+h2 {
+  font-size: clamp(2.1rem, 6.5vw, 3.1rem);
+}
+h3 {
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+}
+
+p {
+  color: var(--text-soft);
+}
+
+a {
+  color: var(--accent);
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+/* Acessibilidade */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
