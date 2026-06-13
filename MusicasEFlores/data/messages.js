@@ -1,108 +1,180 @@
 /* =========================================================
-   data/messages.js — TEXTOS da jornada (fácil de editar)
-   Carta, "Abrir quando", motivos, promessas, caixa de lembranças,
-   quiz, segredos e a pergunta final. Edite à vontade. 💌
+   data/messages.js — TEXTOS DA JORNADA EXPANDIDA
+   O coração do projeto. Edite livremente todos os textos.
    ========================================================= */
 window.MF_DATA = Object.assign(window.MF_DATA || {}, {
-  // --- Carta (parágrafos) ---
+  
+  // --- 1. Carta em Capítulos ---
   letter: {
-    paragrafos: [
-      "Sabrina, eu fiz essa página porque escrever no papel nunca foi o meu forte, e mesmo assim eu precisava te dizer essas coisas de um jeito que ficasse pra sempre. Aqui estão mais de 600 dias da gente, e eu nem sei por onde começar.",
-      "Eu queria te dar o mundo inteiro. E se eu não conseguir te dar, então eu quero conquistar ele junto com você, do seu lado, no mesmo passo. A melhor vida possível pra mim é qualquer vida que tenha você dentro.",
-      "Você nem imagina, mas tudo me lembra de você. Uma música boba, uma flor na rua, um silêncio no fim do dia. E olha, amor é quando até o silêncio entre a gente tem sentido. Você é meu presente.",
-      "Eu sei que ainda não sei demonstrar tudo o que eu sinto. Sou lerdo, chato, às vezes emburrado. Mas eu quero aprender, com gesto, com palavra, com atitude. Quero te provar todo dia que valeu a pena ter me escolhido.",
-      "Essa distância é difícil, eu não vou mentir. Mas eu prefiro ter pouco de você de longe do que muito de qualquer outra coisa de perto. Você me faz querer ser melhor mesmo a quilômetros daqui.",
-      "Por isso eu te lembro do que a gente já sabe: amores de domingo são bonitos, mas o nosso amor é pro cansaço da segunda, pra estranheza da terça, pra ansiedade da quarta, pra animação da quinta, pra felicidade da sexta, pras loucuras do sábado e pro sossego do domingo."
+    capitulos: [
+      { titulo: "Capítulo 1: O começo",
+        texto: "Eu não sei exatamente em qual momento você virou tão importante, mas sei que, quando percebi, você já morava em muitos pensamentos meus. Uma conversa boba virou rotina, a rotina virou saudade, e a saudade virou amor." },
+      { titulo: "Capítulo 2: O que eu admiro em você",
+        texto: "Eu admiro seu jeito, sua presença, sua forma de existir. Tem algo em você que deixa tudo mais bonito sem precisar fazer esforço. Você é a mulher mais linda, gostosa, inteligente e maravilhosa da minha vida." },
+      { titulo: "Capítulo 3: O que eu sinto",
+        texto: "O que eu sinto é que a melhor vida possível para mim é qualquer vida que tenha você dentro. Você é carinho em forma de pessoa. É meu presente. Eu já te amava antes mesmo de saber." },
+      { titulo: "Capítulo 4: A nossa saudade",
+        texto: "A saudade não é só sentir falta. Às vezes é lembrar de um detalhe pequeno e perceber que ele só era especial porque era com você. Mas sinto sua falta... E eu prefiro ter pouco de você de longe, do que muito de qualquer outra coisa de perto." },
+      { titulo: "Capítulo 5: O que eu prometo cuidar",
+        texto: "Eu não sei tudo que vem pela frente, mas sei que muita coisa ainda vai ser melhor se eu puder dividir com você. Quero cuidar dos detalhes, das palavras, dos silêncios, e te provar todo dia que valeu a pena escolher a gente." }
     ]
   },
 
-  // --- Abrir quando... ---
+  // --- 2. Cofre do Nosso Amor ---
+  vault: {
+    senha: "sabrina",
+    mensagemSecreta: "Você desbloqueou uma parte que era só sua. O que eu não digo em voz alta todos os dias, mas sinto em cada segundo: você é a mulher da minha vida e para minha vida. Te amo infinitamente."
+  },
+
+  // --- 3. A gente em números (Dados estáticos que serão animados) ---
+  stats: [
+    { rotulo: "Registros de conversas no WhatsApp", valorFinal: 173884 },
+    { rotulo: "Mídias trocadas", valorFinal: 19543 },
+    { rotulo: "Vezes que 'amor' apareceu", valorFinal: 9772 },
+    { rotulo: "Vezes que 'te amo' apareceu", valorFinal: 1523 },
+    { rotulo: "Dias ativos conversando no zap", valorFinal: 821 }
+  ],
+
+  // --- 4. Museu das Nossas Memórias ---
+  museum: [
+    { titulo: "Obra 01: O começo de tudo", foto: "IMG_20231020_230101_960.webp", legenda: "Quando as conversas já começavam a virar a melhor parte do dia." },
+    { titulo: "Obra 02: A nossa música", foto: "IMG_20240213_211925_641.webp", legenda: "Hoje eu não consigo escutar sem você aparecer na minha cabeça inteira." },
+    { titulo: "Obra 03: Sorriso que me ganhou", foto: "IMG_20240415-WA0028.jpg", legenda: "Aquele sorriso bobo que você tem e que muda o meu humor em segundos." },
+    { titulo: "Obra 04: A foto da saudade", foto: "IMG_20240707_003145_268.webp", legenda: "Tem dias que eu guardo só pra mim, pra puxar quando a saudade aperta." },
+    { titulo: "Obra 05: O abraço que queria agora", foto: "IMG_20250420_195536_219.webp", legenda: "Meu lugar favorito no mundo inteiro é do seu lado." }
+  ],
+
+  // --- 5. Abrir quando... ---
   openWhen: [
     { gatilho: "Abrir quando estiver com saudade", emoji: "🌧️",
-      mensagem: "Eu sei, a distância pesa. Mas pega esse bilhete e lembra: cada quilômetro entre a gente é só um quilômetro a menos pra te abraçar de novo. Já são mais de 600 dias te escolhendo, e eu escolheria de novo agora, sem pensar. Fecha os olhos que eu tô aí." },
+      mensagem: "Eu também sinto sua falta. Talvez agora a gente não esteja perto do jeito que queria, mas você continua aqui, nos detalhes do meu dia. Eu gosto muito de ter você como minha namorada." },
     { gatilho: "Abrir quando estiver triste", emoji: "🫂",
-      mensagem: "Vem cá. Você não precisa estar bem agora, eu fico com você do jeito que você estiver. Lembra do poema: o nosso amor é pro cansaço da segunda e pra estranheza da terça também, não só pros dias bonitos. Respira. Isso passa, e eu não vou pra lugar nenhum." },
+      mensagem: "Eu queria estar aí para te abraçar sem pressa. Mas enquanto eu não posso, deixa essa mensagem te lembrar: você me salva dms." },
     { gatilho: "Abrir quando quiser rir", emoji: "😄",
-      mensagem: "Pensa no tanto que eu te emburro e te encho a paciência e mesmo assim você me aguenta esse tempo todo. Isso já valia medalha. Agora imagina minha cara tentando ser romântico sem estragar tudo. Pronto, você riu." },
-    { gatilho: "Abrir quando duvidar do quanto eu te amo", emoji: "💗",
-      mensagem: "Olha, eu ainda não sei demonstrar tudo o que sinto, e isso me dá raiva de mim mesmo. Mas tudo o que eu vivo me faz lembrar de você, todo dia. Eu quero te dar o mundo, ou conquistar ele junto com você. Se a dúvida bateu, a resposta é simples: muito. Mais do que eu consigo escrever." },
-    { gatilho: "Abrir quando quiser lembrar da gente", emoji: "💞",
-      mensagem: "A gente começou de longe e foi construindo isso aos poucos, conversa por conversa, madrugada por madrugada. Você é meu presente, Sabrina, no sentido literal. Amor é quando até o silêncio entre a gente tem sentido, e o nosso tem. Guarda isso." },
+      mensagem: "Lembrete importante: você namora uma pessoa que é completamente apaixonado por você. Seu nerd lindo gostoso inteligente maravilhoso." },
+    { gatilho: "Abrir quando quiser lembrar de nós", emoji: "💞",
+      mensagem: "A gente começou de longe e foi construindo isso aos poucos, conversa por conversa, madrugada por madrugada. Você foi aquele ponto colorido na página do nosso passado td preto e branco." },
+    { gatilho: "Abrir quando estiver insegura", emoji: "💗",
+      mensagem: "Olha para mim (ou para essa tela): você é a mulher da minha vida e para minha vida. Eu não tenho dúvida nenhuma de que é com você que eu quero ficar." },
     { gatilho: "Abrir quando precisar de carinho", emoji: "🤍",
-      mensagem: "Chega aqui, deita um pouco. Imagina minha mão no seu cabelo e a minha voz dizendo que vai ficar tudo bem. Eu quero te dar a melhor vida possível, e por enquanto faço isso com palavra, gesto e esse bilhete. Você é cuidada, sempre. Por mim." }
+      mensagem: "Vem cá, mesmo que só em pensamento. Imagina meu abraço apertado, minha mão na sua, e eu dizendo baixinho: vai ficar tudo bem, meu amor." },
+    { gatilho: "Abrir quando estiver brava comigo", emoji: "😤",
+      mensagem: "Se eu fiz besteira, provavelmente fui lerdo. Não é desculpa, mas é bem realista. Mas eu quero que você aprenda junto cmg. Me desculpa? Te amo." },
+    { gatilho: "Abrir quando for dormir", emoji: "🌙",
+      mensagem: "Espero que seu coração descanse hoje. Que seus pensamentos fiquem leves. Vejo você na próxima vida, mas nessa também te amo muito." },
+    { gatilho: "Abrir quando acordar", emoji: "☀️",
+      mensagem: "Bom dia, amor! Que seu dia seja leve, que você se sinta bonita, amada e lembrada. Porque eu sou seu amor." },
+    { gatilho: "Abrir quando duvidar do quanto eu te amo", emoji: "🥺",
+      mensagem: "Ué, achei que seu nome era amor. Eu amo você nos dias bons e ruins. Eu escolho você todos os dias." }
   ],
 
-  // --- Motivos pelos quais eu te amo ---
+  // --- 6. Motivos pelos quais eu te amo ---
   loveReasons: [
-    "Porque você me aguenta sendo lerdo, chato e emburrado, e ainda escolhe ficar.",
-    "Porque com você até o silêncio entre a gente tem sentido.",
-    "Porque você transforma a distância em saudade boa, e não em desculpa pra desistir.",
-    "Porque seu nome aparecendo na tela ainda muda o meu dia inteiro.",
-    "Porque você entende meus humores sem eu precisar explicar nada.",
-    "Porque a gente briga, se ajeita, e continua querendo o mesmo futuro.",
-    "Porque você é a primeira pessoa em quem eu penso quando algo bom acontece.",
-    "Porque com você eu virei alguém que quer dar certo, não só passar o tempo.",
-    "Porque você ri das minhas besteiras mesmo quando elas não têm graça nenhuma.",
-    "Porque mesmo longe você sempre dá um jeito de estar perto.",
-    "Porque você me faz querer ser melhor sem nunca me cobrar isso.",
-    "Porque cada conversa nossa que vira madrugada vale mais que dormir cedo.",
-    "Porque você me lembra todo dia que casa não é lugar, é gente.",
-    "Porque você tem paciência com a minha demora pra demonstrar o que sinto.",
-    "Porque tudo que eu vivo, até o mais bobo, me faz lembrar de você.",
-    "Porque com você eu quero o cansaço da segunda e o sossego do domingo, o pacote inteiro.",
-    "Porque você acredita na gente nos dias em que eu fico em dúvida de mim.",
-    "Porque você é o meu presente, e eu nem precisei pedir.",
-    "Porque depois de mais de 600 dias eu ainda te escolheria de novo, do zero.",
-    "Porque você faz a vida comum parecer a melhor vida possível, e eu só quero vivê-la do seu lado."
+    "Porque você me salva dms.",
+    "Porque eu quero aprender junto com você.",
+    "Porque eu gosto de você e tô apaixonado por você.",
+    "Porque você é minha nerd linda gostosa inteligente maravilhosa.",
+    "Porque eu já te amava antes de perceber.",
+    "Porque eu achei que seu nome era amor.",
+    "Porque eu sou seu amor.",
+    "Porque você é aquele ponto colorido na página do nosso passado todo preto e branco.",
+    "Porque você é minha tara.",
+    "Porque eu gosto muito de ter você como minha namorada.",
+    "Porque você é a mulher da minha vida e para minha vida.",
+    "Porque eu te amo mais 💗",
+    "Porque eu escolho você todos os dias e pretendo todos os amanhãs também."
   ],
 
-  // --- Promessas pequenas (post-its) ---
+  // --- 7. Promessas pequenas ---
   promises: [
-    "Prometo tentar te entender mesmo quando eu estiver emburrado.",
-    "Prometo te ouvir de verdade, mesmo nos dias em que eu falo pouco.",
-    "Prometo encurtar essa distância do jeito que der, todo dia um pouco.",
-    "Prometo aprender a te mostrar com gestos o que ainda não sei dizer com palavras.",
-    "Prometo te escolher de novo na segunda cansada e na terça estranha.",
-    "Prometo não desistir da gente, mesmo sendo teimoso do jeito que eu sou.",
-    "Prometo construir o mundo com você, e se não der pra te dar ele inteiro, conquisto junto.",
-    "Prometo lembrar de você em tudo, porque já não consigo de outro jeito."
+    "Aprender a amar melhor.",
+    "Aprender a cuidar melhor.",
+    "Aprender a ouvir melhor.",
+    "Aprender a continuar.",
+    "Aprender a escolher a gente mesmo nos dias difíceis."
   ],
 
-  // --- Caixa de lembranças ---
-  memoryBox: [
-    { rotulo: "Uma foto", emoji: "📷", mensagem: "Olha a gente ali. Eu ainda não acreditava na sorte que era te ter." },
-    { rotulo: "Uma música", emoji: "🎶", mensagem: "Toda vez que toca, eu volto pra perto de você sem sair do lugar." },
-    { rotulo: "Uma frase", emoji: "💬", mensagem: "Amor é quando até o silêncio entre a gente tem sentido." },
-    { rotulo: "Uma promessa", emoji: "🤞", mensagem: "A melhor vida possível é a que eu vou viver do seu lado. Continua comigo?" },
-    { rotulo: "Uma saudade", emoji: "🌙", mensagem: "São mais de 600 dias e a saudade não cansa. Só me lembra o quanto vale." },
-    { rotulo: "Um momento", emoji: "🌻", mensagem: "Nosso amor é pro cansaço da segunda e pro sossego do domingo. Pra tudo. Você é meu presente." }
+  // --- 8. Roleta de Lembranças ---
+  memories: [
+    "Nerd lindo gostoso inteligente maravilhoso.",
+    "Aquele ponto colorido na página do nosso passado td preto e branco.",
+    "Vc me salva dms.",
+    "Eu gosto muito de ter vc como meu namorado.",
+    "Já te amava."
   ],
 
-  // --- Mini quiz ---
+  // --- 9. Roleta de Encontros ---
+  encounters: [
+    "Noite de filme com cobertor",
+    "Comida gostosa e muita preguiça",
+    "Passeio sem roteiro para se perder",
+    "Dia de tirar muitas fotos bobas",
+    "Jantar simples só nós dois",
+    "Café da tarde longo com fofocas",
+    "Dia inteiro na cama só juntinhos"
+  ],
+
+  // --- 10. Cartão Raspadinha ---
+  scratchCards: [
+    "Vc é minha tara.",
+    "De amor da vida e para vida.",
+    "Vejo você na próxima vida.",
+    "Pq eu sou seu amor.",
+    "Te amo mais 💗"
+  ],
+
+  // --- 11. Bilhetes Escondidos (Easter Eggs) ---
+  hiddenSecrets: [
+    "Ué, achei que seu nome era amor.",
+    "Eu deixei isso aqui só para te arrancar um sorriso bobo.",
+    "Eu escolho você todos os dias.",
+    "Mesmo de longe, eu durmo e acordo pensando em você.",
+    "Você fuçou até achar isso, né? Sua curiosa linda. Te amo.",
+    "Ué, achei que seu nome era amor."
+  ],
+
+  // --- 12. Timeline da história ---
+  timeline: [
+    { data: "16/10/2023", titulo: "O começo do nosso namoro", icone: "❤️", foto: "IMG_20231020_230101_960.webp", frase: "O dia 0 da nossa história." },
+    { data: "09/03/2024", titulo: "O recomeço do chat", icone: "💬", foto: "IMG_20231020_230203_484.webp", frase: "\"My zap zap foi d ralas\", mas a gente continuou." },
+    { data: "20/03/2024", titulo: "Você me salva", icone: "🫂", frase: "\"Vc me salva dms\"" },
+    { data: "24/03/2024", titulo: "Aprender junto", icone: "🌱", frase: "\"E eu quero que vc aprenda junto cmg\"" },
+    { data: "15/04/2024", titulo: "Apaixonada por você", icone: "😍", foto: "IMG_20240415-WA0028.jpg", frase: "\"Eu gosto de vc e tô apaixonada por vc\"" },
+    { data: "18/04/2024", titulo: "O elogio que virou memória", icone: "🔥", frase: "\"Nerd lindo gostoso inteligente maravilhoso\"" },
+    { data: "28/04/2024", titulo: "Já te amava", icone: "💞", frase: "\"Já te amava\"" },
+    { data: "29/04/2024", titulo: "Seu nome era amor", icone: "🥰", frase: "\"Ué achei que seu nome era amor\"" },
+    { data: "03/05/2024", titulo: "Eu sou seu amor", icone: "🫶", frase: "\"Pq eu sou seu amor\"" },
+    { data: "12/05/2024", titulo: "Te amo mais", icone: "💗", frase: "\"Te amo mais 💗\"" },
+    { data: "12/06/2024", titulo: "Nosso Dia dos Namorados", icone: "💝", foto: "IMG_20240601_221006_003.webp", frase: "\"Feliz dia dos namorados amore 💗\"" },
+    { data: "09/07/2024", titulo: "O ponto colorido", icone: "🎨", foto: "IMG_20240707_003145_268.webp", frase: "\"Aquele ponto colorido na página do nosso passado td preto e branco\"" },
+    { data: "19/08/2024", titulo: "Meu namorado", icone: "👫", frase: "\"E eu gosto muito de ter vc como meu namorado\"" },
+    { data: "28/08/2024", titulo: "Próxima vida", icone: "🌌", frase: "\"Vejo você na próxima vida\"" },
+    { data: "08/09/2024", titulo: "Amor da vida e para vida", icone: "♾️", frase: "\"E vc é o amor da minha vida e para minha vida\"" },
+    { data: "16/09/2024", titulo: "Todos os amanhãs", icone: "🌅", frase: "\"E eu escolho ele todos os dias. E escolho vc tbm. E pretendo todos os amanhãs também.\"" },
+    { data: "16/10/2024", titulo: "1 ano juntos", icone: "🥂", frase: "Um ano escolhendo a gente." },
+    { data: "16/10/2025", titulo: "2 anos juntos", icone: "🎉", frase: "\"Feliz 2 anos meu amorrr ❤️\" e \"Feliz 2 anos amoreee\"" },
+    { data: "12/06/2026", titulo: "Mais um Dia dos Namorados", icone: "🌹", foto: "IMG_20250420_195536_219.webp", frase: "\"Feliz dia dos namorados meu bem ❤️\" e \"Mais um dia dos namorados com a melhor escolha que ja fiz na vidaaaa\"" }
+  ],
+
+  // --- 13. Quiz do Casal ---
   quiz: [
     { pergunta: "Qual é o nosso tipo de amor?",
-      opcoes: ["Amor de domingo, só no descanso", "Amor da semana inteira, no caos e na paz", "Amor de feriado prolongado", "Amor que dá trabalho (do bom)"],
-      mensagem: "Resposta certa é qualquer uma, porque o nosso amor aguenta a semana toda. Eu te escolho na segunda cansada e no domingo de sossego." },
+      opcoes: ["Amor de domingo, só no descanso", "Amor da semana inteira, no caos e na paz", "Amor de feriado prolongado"],
+      mensagem: "Resposta certa é qualquer uma, porque o nosso amor aguenta a semana toda. Escolho você na segunda cansada e no domingo de paz." },
     { pergunta: "O que me lembra você?",
-      opcoes: ["Uma música que toca do nada", "Uma flor no meio do caminho", "O silêncio bom no fim do dia", "Tudo, sinceramente tudo"],
-      mensagem: "Pegadinha: a resposta é tudo. Você mora em cada coisinha do meu dia, mesmo de longe." },
+      opcoes: ["Uma música", "Uma flor no meio do caminho", "Tudo, sinceramente tudo"],
+      mensagem: "Pegadinha: a resposta é tudo. Você mora em cada coisinha do meu dia." },
     { pergunta: "Quantos dias a gente já venceu juntos?",
-      opcoes: ["Uns pouquinhos", "Mais de 600 e contando", "Perdi a conta de tão feliz", "Os suficientes pra eu ter certeza"],
-      mensagem: "Mais de 600 dias, e eu contaria cada um de novo só pra chegar até aqui com você." }
+      opcoes: ["Uns pouquinhos", "Mais de 600 e contando", "Os suficientes pra eu ter certeza"],
+      mensagem: "Mais de 971 dias, e eu contaria cada um de novo só pra chegar até aqui com você." }
   ],
 
-  // --- Segredos (easter eggs) ---
-  secrets: [
-    "Você achou um cantinho secreto. Igual você achou um cantinho no meu peito sem nem pedir licença.",
-    "Psiu: mesmo de longe, eu durmo pensando em você e acordo do mesmo jeito.",
-    "Segredo número três: não tem segredo. Eu te amo na cara dura, todo dia, sem freio."
-  ],
-
-  // --- Pergunta final ---
+  // --- 14. Pergunta Final ---
   finalQuestion: {
-    pergunta: "Então, Sabrina: quer continuar vivendo essa bagunça linda comigo, mesmo eu sendo lerdo, chato e emburrado de vez em quando?",
-    simLabel: "Quero sim",
-    claroLabel: "Claro que quero, bobo!",
-    mensagemFinal: "Eu sabia. E eu prometo continuar tentando ser melhor pra você, com gesto, palavra e atitude, até a distância virar só uma história que a gente conta rindo. Te amo, do cansaço da segunda ao sossego do domingo. Você é meu presente."
+    pergunta: "Então, amor: quer continuar vivendo essa bagunça linda comigo, escolhendo a gente em todos os amanhãs?",
+    simLabel: "Sim",
+    claroLabel: "Claro que sim!",
+    mensagemFinal: "Então vem. Eu ainda quero viver muita coisa bonita com você. Te amo infinitamente."
   }
 });
+

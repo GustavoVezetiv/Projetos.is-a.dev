@@ -3,12 +3,12 @@
 (function () {
   "use strict";
 
-  var MEDIA_BASE = "Spotfy/Imagens/MeuAmor/";
-
   function build() {
     var tl = document.getElementById("timeline");
     if (!tl) return;
     var items = (window.MF_DATA && window.MF_DATA.timeline) || [];
+    var BASE = (window.MF && window.MF.MEDIA_BASE) || "Spotfy/Imagens/MeuAmor/";
+    var esc = (window.MF && window.MF.esc) || function (s) { return String(s == null ? "" : s); };
 
     items.forEach(function (m) {
       var item = document.createElement("div");
@@ -30,7 +30,7 @@
           '<img class="tl-item__photo" loading="lazy" alt="' +
           esc(m.titulo) +
           '" src="' +
-          MEDIA_BASE +
+          BASE +
           m.foto +
           '">';
       }
@@ -40,17 +40,10 @@
     });
   }
 
-  function esc(s) {
-    return String(s == null ? "" : s)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
-
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", build);
   } else {
     build();
   }
 })();
+

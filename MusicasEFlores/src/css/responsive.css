@@ -2,7 +2,7 @@
    responsive.css — ajustes para celular e telas grandes
    ========================================================= */
 
-/* Navegação por pontos: só no desktop (celular usa rolagem) */
+/* Navegação por pontos: só no desktop */
 @media (max-width: 820px) {
   .dotnav {
     display: none;
@@ -14,18 +14,34 @@
   .section {
     padding: 60px 0;
   }
+  .hero {
+    padding: 80px 20px 60px;
+  }
   .hero__photo {
-    width: 124px;
-    height: 124px;
+    width: 126px;
+    height: 126px;
   }
   .hero__subtitle {
     font-size: 1.05rem;
   }
 
-  .gallery {
-    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
-    gap: 12px;
+  /* Timeline: garantir que o dot fique bem com o novo padding */
+  .tl-item {
+    padding: 0 0 22px 62px;
   }
+  .tl-item__dot {
+    left: 5px;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 14px;
+  }
+  /* Polaroid no mobile: sombra mais leve */
+  .polaroid {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 6px 16px rgba(180, 75, 115, 0.08);
+  }
+
   .reasons-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -33,6 +49,16 @@
   .membox,
   .postits {
     grid-template-columns: 1fr;
+  }
+
+  /* Música: iframe responsivo no mobile */
+  .music-card {
+    padding: 22px 16px;
+    width: 100%;
+  }
+  .music-card__disc {
+    width: 88px;
+    height: 88px;
   }
 
   .btn {
@@ -57,16 +83,77 @@
     font-size: 1rem;
   }
 
-  /* modais ocupam melhor a tela */
+  /* modais: ocupam melhor a tela */
   .modal__card {
-    padding: 28px 22px;
+    padding: 26px 20px;
+  }
+  .modal__media img,
+  .modal__media video {
+    max-width: 96vw;
+    max-height: 70vh;
+  }
+
+  /* post-its: sem rotação no mobile */
+  .postit:nth-child(2n),
+  .postit:nth-child(3n),
+  .postit:nth-child(4n) {
+    transform: none;
+  }
+
+  /* Timeline: compacta no mobile */
+  .tl-item {
+    padding: 0 0 14px 52px;
+  }
+  .tl-item__dot {
+    left: 2px;
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+  }
+  .tl-item__photo {
+    max-width: 140px;
+  }
+  .tl-item__title {
+    font-size: 0.88rem;
+  }
+  .tl-item__text {
+    font-size: 0.82rem;
+  }
+
+  /* Quote blocks: menores no mobile */
+  .quote-block {
+    padding: 28px 16px;
+  }
+  .real-quote {
+    font-size: 1.4rem;
+  }
+  .real-quote-sub {
+    font-size: 0.9rem;
+  }
+
+  /* Stats grid: duas colunas no mobile */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .stat-item {
+    padding: 20px 12px;
+  }
+  .stat-value {
+    font-size: 2rem;
+  }
+  .stat-label {
+    font-size: 0.82rem;
   }
 }
 
-/* botões de toque maiores em telas bem pequenas */
+/* Telas muito pequenas */
 @media (max-width: 360px) {
   .reasons-grid {
     grid-template-columns: 1fr;
+  }
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -79,3 +166,4 @@
     grid-template-columns: repeat(4, 1fr);
   }
 }
+

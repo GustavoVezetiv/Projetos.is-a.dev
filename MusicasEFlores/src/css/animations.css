@@ -51,8 +51,9 @@
 
 /* florzinha nascendo no jardim */
 @keyframes grow-up {
-  0% { transform: translateY(20px) scale(0); opacity: 0; }
-  60% { transform: translateY(0) scale(1.12); opacity: 1; }
+  0%   { transform: translateY(24px) scale(0); opacity: 0; }
+  55%  { transform: translateY(-4px) scale(1.14); opacity: 1; }
+  80%  { transform: translateY(2px) scale(0.96); }
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
@@ -61,4 +62,18 @@
   0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
   10% { opacity: 1; }
   100% { transform: translateY(110vh) rotate(40deg); opacity: 0; }
+}
+
+/* shimmer — página carregando / gloss em cards */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* heartbeat — pulso discreto em elementos especiais */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25%       { transform: scale(1.08); }
+  50%       { transform: scale(1); }
+  75%       { transform: scale(1.04); }
 }

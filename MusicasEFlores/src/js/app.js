@@ -132,26 +132,34 @@
   /* ---------------- Revelar ao rolar ---------------- */
   function revealOnScroll() {
     var items = document.querySelectorAll(".reveal");
-    if (!items.length) return;
+    var bwItems = document.querySelectorAll(".bw-to-color");
+    
+    if (!items.length && !bwItems.length) return;
+    
     if (!("IntersectionObserver" in window)) {
-      items.forEach(function (el) {
-        el.classList.add("is-visible");
-      });
+      items.forEach(function (el) { el.classList.add("is-visible"); });
+      bwItems.forEach(function (el) { el.classList.add("is-colored"); });
       return;
     }
+    
     var io = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
+            if (entry.target.classList.contains("bw-to-color")) {
+                entry.target.classList.add("is-colored");
+            }
             io.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.12 }
     );
-    items.forEach(function (el) {
-      io.observe(el);
+    
+    items.forEach(function (el) { io.observe(el); });
+    bwItems.forEach(function (el) { 
+      if (!el.classList.contains("reveal")) io.observe(el); 
     });
   }
 
@@ -219,6 +227,18 @@
     presentOpen();
     var y = document.getElementById("year");
     if (y) y.textContent = new Date().getFullYear();
+
+    // planta uma flor ao chegar na seção do jardim
+    var jardimEl = document.getElementById("jardim-final");
+    if (jardimEl && "IntersectionObserver" in window) {
+      var jardimObs = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+          if (window.MF && window.MF.garden) window.MF.garden.plant("chegou-jardim");
+          jardimObs.disconnect();
+        }
+      }, { threshold: 0.25 });
+      jardimObs.observe(jardimEl);
+    }
   }
 
   if (document.readyState === "loading") {

@@ -16,6 +16,9 @@
       rel="stylesheet"
     />
 
+    <!-- pré-carrega a imagem acima da dobra (489 KB) -->
+    <link rel="preload" as="image" href="assets/aMor.jpeg" fetchpriority="high" />
+
     <link rel="stylesheet" href="src/css/base.css" />
     <link rel="stylesheet" href="src/css/layout.css" />
     <link rel="stylesheet" href="src/css/components.css" />
@@ -41,17 +44,20 @@
     <nav class="dotnav" aria-label="Navegação da jornada">
       <a href="#inicio" data-label="Início" class="is-active" aria-label="Início"></a>
       <a href="#carta" data-label="Carta" aria-label="Carta"></a>
+      <a href="#cofre" data-label="Cofre secreto" aria-label="Cofre secreto"></a>
+      <a href="#numeros" data-label="Nossos números" aria-label="Nossos números"></a>
       <a href="#jornada" data-label="Nossa jornada" aria-label="Nossa jornada"></a>
-      <a href="#memorias" data-label="Memórias" aria-label="Memórias"></a>
+      <a href="#museu" data-label="Museu de Memórias" aria-label="Museu de Memórias"></a>
       <a href="#musica" data-label="Nossa música" aria-label="Nossa música"></a>
       <a href="#abrir-quando" data-label="Abrir quando" aria-label="Abrir quando"></a>
+      <a href="#roletas" data-label="Roletas" aria-label="Roletas"></a>
       <a href="#motivos" data-label="Motivos" aria-label="Motivos"></a>
       <a href="#jardim-final" data-label="Jardim" aria-label="Jardim"></a>
     </nav>
 
     <!-- 1. ABERTURA -->
     <header class="hero" id="inicio">
-      <img class="hero__photo" src="assets/beijinho.jpg" alt="Foto nossa, juntinhos" />
+      <img class="hero__photo" src="assets/aMor.jpeg" alt="Foto nossa, juntinhos" fetchpriority="high" />
       <p class="hero__kicker">Tenho uma coisa pra te mostrar...</p>
       <h1>Músicas &amp; Flores</h1>
       <p class="hero__subtitle">
@@ -75,9 +81,48 @@
             </div>
             <p class="envelope__hint">Clique para abrir</p>
             <div class="letter-panel">
-              <div class="letter__paper"><p class="letter__text"></p></div>
+              <div class="letter__paper" id="letter-chapters"></div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- PONTO COLORIDO -->
+      <section class="section bw-to-color" id="ponto-colorido">
+        <div class="wrap quote-block">
+          <p class="real-quote">"Aquele ponto colorido na página do nosso passado td preto e branco"</p>
+          <p class="real-quote-sub">No meio de tanta coisa confusa, você virou cor.</p>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- COFRE DO NOSSO AMOR -->
+      <section class="section reveal" id="cofre">
+        <div class="wrap">
+          <h2 class="section__title">Cofre do nosso amor</h2>
+          <p class="section__subtitle">Digite a palavra secreta para abrir.</p>
+          <div class="vault-container" id="vault-container">
+            <input type="password" id="vault-input" class="vault-input" placeholder="Senha secreta..." aria-label="Senha secreta" />
+            <button id="vault-btn" class="btn btn--ghost">Tentar abrir</button>
+            <p id="vault-error" class="vault-error" aria-live="polite"></p>
+          </div>
+          <div id="vault-content" class="vault-content" hidden>
+            <p id="vault-message" class="vault-message"></p>
+          </div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- A GENTE EM NÚMEROS -->
+      <section class="section reveal" id="numeros">
+        <div class="wrap">
+          <h2 class="section__title">A gente em números</h2>
+          <p class="section__subtitle">Algumas coisas não dá pra contar, mas a gente tenta.</p>
+          <div class="stats-grid" id="stats-grid"></div>
         </div>
       </section>
 
@@ -94,13 +139,16 @@
 
       <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
 
-      <!-- 4. NOSSAS MEMÓRIAS (galeria polaroid) -->
-      <section class="section reveal" id="memorias">
+      <!-- 4. MUSEU DAS NOSSAS MEMÓRIAS -->
+      <section class="section reveal" id="museu">
         <div class="wrap">
-          <h2 class="section__title">Nossas memórias</h2>
-          <p class="section__subtitle">Toca em qualquer foto ou vídeo para ver maior.</p>
+          <h2 class="section__title">Museu das nossas memórias</h2>
+          <p class="section__subtitle">Nossa história como uma exposição de arte.</p>
+          <div class="museum-grid" id="museum-grid"></div>
+          
+          <h3 class="section__subtitle" style="margin-top: 40px;">Mais memórias</h3>
           <div class="gallery" id="gallery"></div>
-          <a class="btn btn--ghost" href="Spotfy/index.html" target="_blank" rel="noopener">
+          <a class="btn btn--ghost" href="Spotfy/index.html" target="_blank" rel="noopener" style="margin-top: 20px;">
             Ver o álbum completo 📸
           </a>
         </div>
@@ -119,10 +167,84 @@
             <iframe
               title="Nossa música no Spotify"
               src="https://open.spotify.com/embed/track/07DskqQ1NbTiotX1WIV7ob?si=63a8bf1837e2406f"
-              width="380" height="152" frameborder="0" loading="lazy"
+              height="152" loading="lazy"
+              style="border:0; border-radius:12px; width:min(380px,78vw);"
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             ></iframe>
           </div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- MAPA DA SAUDADE -->
+      <section class="section reveal" id="mapa">
+        <div class="wrap">
+          <h2 class="section__title">Mapa da Saudade</h2>
+          <p class="section__subtitle">Daqui até você parece longe. Mas no meu pensamento, você está sempre perto.</p>
+          <div class="map-container">
+            <div class="map-dot">Eu</div>
+            <div class="map-line"><div class="map-plane">✈️</div></div>
+            <div class="map-dot">Você</div>
+          </div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- VOCÊ ME SALVA -->
+      <section class="section reveal" id="voce-me-salva">
+        <div class="wrap quote-block">
+          <p class="real-quote">"Vc me salva dms"</p>
+          <p class="real-quote-sub">Talvez você não saiba, mas algumas frases suas também me salvaram.</p>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- CÉU DO NOSSO DIA -->
+      <section class="section reveal" id="ceu">
+        <div class="wrap sky-wrap">
+          <div class="stars-bg"></div>
+          <h2 class="section__title" style="color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">O céu do nosso dia</h2>
+          <p class="section__subtitle" style="color: #ffe3eb;">Talvez o céu nem soubesse ainda, mas naquele dia alguma coisa bonita estava começando.</p>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- ROLETAS -->
+      <section class="section reveal" id="roletas">
+        <div class="wrap">
+          <h2 class="section__title">O que a gente vai fazer?</h2>
+          <p class="section__subtitle">Na dúvida, sorteia aí.</p>
+          <div class="roulette-container">
+            <div class="roulette-card">
+              <h3 class="roulette-title">Roleta de Lembranças</h3>
+              <p id="roulette-memory-text" class="roulette-text">Sorteie uma memória...</p>
+              <button id="btn-roulette-memory" class="btn btn--sm">Sortear lembrança</button>
+            </div>
+            <div class="roulette-card">
+              <h3 class="roulette-title">Próximo Encontro</h3>
+              <p id="roulette-encounter-text" class="roulette-text">Sorteie um encontro...</p>
+              <button id="btn-roulette-encounter" class="btn btn--sm">Sortear encontro</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- CARTÃO RASPADINHA -->
+      <section class="section reveal" id="raspadinha">
+        <div class="wrap">
+          <h2 class="section__title">Raspadinha do Amor</h2>
+          <p class="section__subtitle">Passe o dedo ou o mouse para revelar.</p>
+          <div class="scratch-container" id="scratch-container">
+            <div class="scratch-text" id="scratch-text">Sorte do dia: Eu te amo!</div>
+            <canvas id="scratch-canvas" class="scratch-canvas"></canvas>
+          </div>
+          <p><button id="scratch-reset" class="btn btn--ghost" style="margin-top: 15px;">Raspar de novo</button></p>
         </div>
       </section>
 
@@ -166,8 +288,8 @@
       <!-- 9. PROMESSAS -->
       <section class="section reveal" id="promessas">
         <div class="wrap">
-          <h2 class="section__title">Promessas pequenas</h2>
-          <p class="section__subtitle">Coisas que eu prometo de verdade, sem dramatizar. 🤍</p>
+          <h2 class="section__title">Aprender junto</h2>
+          <p class="section__subtitle">"E eu quero que vc aprenda junto cmg" 🌱</p>
           <div class="postits" id="promises"></div>
         </div>
       </section>
@@ -195,6 +317,16 @@
         </div>
       </section>
 
+      <!-- TODOS OS AMANHÃS -->
+      <section class="section reveal" id="todos-os-amanhas">
+        <div class="wrap quote-block">
+          <p class="real-quote">"E eu escolho ele todos os dias. E escolho vc tbm. E pretendo todos os amanhãs também."</p>
+          <p class="real-quote-sub">Não foi só ontem. Não é só hoje. Eu ainda escolheria você nos próximos amanhãs.</p>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
       <!-- 12. JARDIM FINAL -->
       <section class="section reveal" id="jardim-final">
         <div class="wrap">
@@ -203,20 +335,42 @@
           <div class="garden" id="garden"></div>
           <p class="garden__count" id="garden-count"></p>
           <p class="final__phrase">E que a gente floresça junto, pra sempre. 🌹</p>
-          <p>Te amo, Sabrina. ❤️</p>
+          <p>Te amo, <span class="name-sabrina">Sabrina</span>. ❤️</p>
           <p><button id="back-top" class="btn btn--ghost" type="button" hidden>Voltar ao início ↑</button></p>
+        </div>
+      </section>
+
+      <p class="divider" aria-hidden="true">✿ ✿ ✿</p>
+
+      <!-- PRÓXIMA VIDA -->
+      <section class="section reveal final-life" id="proxima-vida">
+        <div class="wrap quote-block">
+          <p class="real-quote">"Vejo você na próxima vida"</p>
+          <p class="real-quote-sub">Se tiver próxima vida, eu procuro você de novo. Mas nessa aqui, eu ainda quero viver muita coisa contigo.</p>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      Feito com ♥ por nós · <span id="year">2025</span>
+      Feito com ♥ por nós · <span id="year">2026</span>
       <button id="secret-heart" class="secret-heart" type="button" aria-label="Um segredinho">♡</button>
     </footer>
+
+    <!-- Modais de Easter Eggs -->
+    <div id="easter-modal" class="modal" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-close></div>
+      <div class="modal__content">
+        <p id="easter-message" class="modal__text" style="font-size: 1.2em; font-weight: 500;"></p>
+        <button class="btn" type="button" data-close>Guardar no coração</button>
+      </div>
+    </div>
 
     <!-- dados editáveis -->
     <script src="data/messages.js"></script>
     <script src="data/memories.js"></script>
+
+    <!-- utilidades compartilhadas (caminho de mídia, escapeHTML, etc.) -->
+    <script src="src/js/utils.js"></script>
 
     <!-- motor da experiência (scripts puros, funcionam abrindo o arquivo localmente) -->
     <script src="src/js/app.js"></script>

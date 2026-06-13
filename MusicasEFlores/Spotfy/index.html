@@ -4,156 +4,155 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nosso Álbum de Fotos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
+      :root {
+        --cream: #fffaf0;
+        --rose: #ffe3eb;
+        --accent: #d85f8a;
+        --accent-2: #b44b73;
+        --text: #4a2230;
+        --gold: #d4af37;
+        --shadow-soft: 0 4px 12px rgba(180, 75, 115, 0.08);
+        --shadow: 0 8px 24px rgba(180, 75, 115, 0.14);
+        --radius: 12px;
+      }
       body {
-        font-family: "Poppins", sans-serif;
+        font-family: "Inter", "Poppins", sans-serif;
         text-align: center;
-        background-color: #6d4c41;
-        color: #ffffff;
+        background: linear-gradient(135deg, var(--cream), var(--rose));
+        color: var(--text);
         position: relative;
+        margin: 0;
+        padding: 40px 20px;
+        min-height: 100vh;
+        overflow-x: hidden;
       }
       h1 {
-        font-size: 3em;
-        text-shadow: 2px 2px 5px #ffd700;
-        color: #ffd700;
+        font-size: 3.2em;
+        font-family: "Dancing Script", cursive;
+        color: var(--accent);
+        margin-bottom: 30px;
+        text-shadow: 1px 1px 0 #fff, 0 4px 12px rgba(216, 95, 138, 0.15);
       }
       .gallery {
         display: grid;
-        grid-template-columns: repeat(
-          auto-fill,
-          minmax(250px, 1fr)
-        ); /* Layout em grid */
-        gap: 15px; /* Espaçamento entre as imagens */
-        justify-items: center; /* Centraliza as imagens dentro das células */
-        margin-top: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+        margin: 40px auto;
+        max-width: 1200px;
       }
-      .gallery img {
-        width: 100%; /* Faz as imagens ocuparem toda a largura da célula */
-        height: 250px;
-        object-fit: cover; /* Ajusta a imagem para preencher o espaço */
-        border-radius: 15px;
-        box-shadow: 3px 3px 10px rgba(255, 215, 0, 0.5);
-        border: 3px solid #ffd700;
-        padding: 5px;
-        background: #fff8dc;
+      .gallery img, .gallery video {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-soft);
+        border: 5px solid #fff;
+        background: #fff;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
       }
-
-      .gallery video {
-        width: 100%; /* Faz as imagens ocuparem toda a largura da célula */
-        height: 250px;
-        object-fit: cover; /* Ajusta a imagem para preencher o espaço */
-        border-radius: 15px;
-        box-shadow: 3px 3px 10px rgba(255, 215, 0, 0.5);
-        border: 3px solid #ffd700;
-        padding: 5px;
-        background: #fff8dc;
+      .gallery img:hover, .gallery video:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: var(--shadow);
       }
-      button {
-        background-color: #ffd700;
-        color: #6d4c41;
+      .btn {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+        color: #fff;
         border: none;
-        padding: 10px 20px;
-        border-radius: 10px;
-        font-size: 1em;
+        padding: 14px 28px;
+        border-radius: 999px;
+        font-size: 1.05em;
+        font-weight: 600;
         cursor: pointer;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-soft);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        text-decoration: none;
+        margin-top: 10px;
       }
-      button:hover {
-        background-color: #e6be8a;
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow);
+      }
+      .btn:active {
+        transform: translateY(0) scale(0.98);
       }
       .love-letter {
         white-space: pre-line;
         text-align: left;
-        max-width: 640px;
-        margin: 18px auto;
-        padding: 22px 26px;
-        border: 2px solid #ffd700;
-        border-radius: 16px;
-        font-size: 1.05em;
-        line-height: 1.7;
-        background-color: #fff8dc;
-        color: #6d4c41;
-        box-shadow: 3px 3px 12px rgba(255, 215, 0, 0.4);
+        max-width: 680px;
+        margin: 0 auto 40px;
+        padding: 36px;
+        border: 1px solid rgba(216, 95, 138, 0.15);
+        border-radius: var(--radius);
+        font-size: 1.08em;
+        line-height: 1.75;
+        background-color: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(8px);
+        color: var(--text);
+        box-shadow: var(--shadow-soft);
       }
       .upload-hint {
-        margin-top: 20px;
-        font-size: 0.95em;
-        color: #ffe9a8;
+        margin-top: 30px;
+        margin-bottom: 12px;
+        font-size: 1.1em;
+        color: var(--accent-2);
+        font-weight: 500;
+      }
+      .upload-wrapper {
+        margin-bottom: 20px;
+      }
+      #fileInput {
+        display: none;
       }
       .spotify-box {
-        margin-top: 20px;
-        padding: 10px;
-        background: #fff8dc;
-        border-radius: 10px;
+        margin-top: 40px;
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(8px);
+        border-radius: 16px;
         display: inline-block;
-        box-shadow: 3px 3px 10px rgba(255, 215, 0, 0.5);
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(216, 95, 138, 0.1);
+      }
+      .spotify-box p {
+        color: var(--accent);
+        font-weight: 600;
+        margin-top: 0;
+        margin-bottom: 16px;
+        font-size: 1.1em;
       }
       .daisies {
         position: absolute;
-        width: 150px;
+        width: 120px;
         height: auto;
+        opacity: 0.8;
+        pointer-events: none;
       }
-      .top-left {
-        top: 10px;
-        left: 10px;
-      }
-      .top-right {
-        top: 10px;
-        right: 10px;
-      }
-      .bottom-left {
-        bottom: 10px;
-        left: 10px;
-      }
-      .bottom-right {
-        bottom: 10px;
-        right: 10px;
-      }
-      .spotify-box p {
-        color: #000000;
-      }
+      .top-left { top: -20px; left: -20px; transform: rotate(-15deg); }
+      .top-right { top: -20px; right: -20px; transform: rotate(25deg); }
+      .bottom-left { bottom: -20px; left: -20px; transform: rotate(-35deg); }
+      .bottom-right { bottom: -20px; right: -20px; transform: rotate(15deg); }
 
       @media (max-width: 768px) {
-        h1 {
-          font-size: 1.5em;
-        }
-        .gallery img {
-          width: 200px;
-          height: 200px;
-        }
-        button {
-          font-size: 0.9em;
-          padding: 8px 16px;
-        }
-        .love-letter {
-          font-size: 1em;
-          padding: 18px 18px;
-        }
-        .spotify-box {
-          width: 100%;
-          margin-top: 10px;
-        }
+        h1 { font-size: 2.6em; }
+        .gallery { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+        .gallery img, .gallery video { height: 200px; border-width: 4px; }
+        .love-letter { padding: 28px; font-size: 1.05em; }
+        .daisies { width: 80px; }
       }
-
       @media (max-width: 480px) {
-        h1 {
-          font-size: 1.2em;
-        }
-        .gallery img {
-          width: 180px;
-          height: 180px;
-        }
-        button {
-          font-size: 0.8em;
-          padding: 6px 12px;
-        }
-        .love-letter {
-          font-size: 0.95em;
-          padding: 16px 16px;
-        }
-        .daisies {
-          width: 60px;
-        }
+        h1 { font-size: 2.2em; }
+        .gallery { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+        .gallery img, .gallery video { height: 160px; border-width: 3px; }
+        .love-letter { padding: 22px; font-size: 1em; }
+        .spotify-box { width: 100%; box-sizing: border-box; padding: 16px; }
+        .spotify-box iframe { width: 100%; }
+        body { padding: 30px 15px; }
+        .btn { padding: 12px 24px; font-size: 1em; }
       }
     </style>
   </head>
@@ -203,9 +202,12 @@ Feliz dia dos namorados atrasados,
 feliz nosso dia adiantado,
 e feliz vida, por estar ao seu lado. ❤</div>
 
-    <p class="upload-hint">Quer guardar mais uma foto aqui? 💛</p>
-    <input type="file" id="fileInput" accept="image/*" />
-    <button onclick="uploadImage()">📸 Enviar Foto</button>
+    <div class="upload-wrapper">
+      <p class="upload-hint">Quer guardar mais uma foto aqui? 💛</p>
+      <label for="fileInput" class="btn">📸 Escolher Foto</label>
+      <input type="file" id="fileInput" accept="image/*" onchange="uploadImage()" />
+    </div>
+    
     <div class="gallery" id="gallery"></div>
 
     <!-- Exemplos de imagens já carregadas na galeria -->

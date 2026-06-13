@@ -4,8 +4,8 @@
 (function () {
   "use strict";
 
-  // Caminho das mídias — se renomear a pasta, troque só esta linha.
-  var MEDIA_BASE = "Spotfy/Imagens/MeuAmor/";
+  // Caminho centralizado em utils.js; fallback seguro caso utils.js não carregue.
+  var MEDIA_BASE = (window.MF && window.MF.MEDIA_BASE) || "Spotfy/Imagens/MeuAmor/";
 
   function build() {
     var grid = document.getElementById("gallery");
