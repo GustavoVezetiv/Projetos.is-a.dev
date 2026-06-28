@@ -8,8 +8,24 @@ function CertificadosTemplate({ openCertModal }) {
         if (slider.dataset.dragAttached) return;
         slider.dataset.dragAttached = 'true';
         let isDown = false;
+        let autoScrollInterval;
+        slider.dataset.isHovered = "false";
         let startX;
         let scrollLeft;
+        
+        // Auto scroll setup
+        const startAutoScroll = () => {
+            if (autoScrollInterval) return;
+            autoScrollInterval = setInterval(() => {
+                if (slider.dataset.isHovered !== 'true' && !isDown) {
+                    slider.scrollLeft += 1;
+                }
+            }, 30);
+        };
+        startAutoScroll();
+        
+        slider.addEventListener('mouseenter', () => { slider.dataset.isHovered = 'true'; });
+        slider.addEventListener('mouseleave', () => { slider.dataset.isHovered = 'false'; isDown = false; });
         slider.addEventListener('mousedown', (e) => {
             isDown = true;
             startX = e.pageX - slider.offsetLeft;
@@ -502,37 +518,32 @@ export default function Dashboard() {
                     className="dock-container flex items-end gap-3 p-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl">
 
                     <div onClick={() => loadApp('certificados')}
-                        className="dock-item group relative w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex justify-center items-center text-white text-2xl border border-white/20 cursor-pointer shadow-lg">
+                        className="dock-item group relative w-12 h-12 bg-white/10 hover:bg-white/20 transition-all rounded-xl flex justify-center items-center text-white text-2xl border border-white/20 cursor-pointer shadow-lg">
                         <i className="fas fa-certificate"></i>
                         <span
                             className="absolute -top-12 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Certificados</span>
                     </div>
 
                     <div onClick={() => loadApp('projetos')}
-                        className="dock-item group relative w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex justify-center items-center text-white text-2xl border border-white/20 cursor-pointer shadow-lg">
+                        className="dock-item group relative w-12 h-12 bg-white/10 hover:bg-white/20 transition-all rounded-xl flex justify-center items-center text-white text-2xl border border-white/20 cursor-pointer shadow-lg">
                         <i className="fas fa-code"></i>
                         <span
                             className="absolute -top-12 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Projetos</span>
                     </div>
 
                     <div onClick={() => loadApp('curriculo')}
-                        className="dock-item group relative w-12 h-12 bg-white/10 rounded-xl flex justify-center items-center text-white/90 text-2xl border border-white/5 cursor-pointer shadow-lg">
+                        className="dock-item group relative w-12 h-12 bg-white/10 hover:bg-white/20 rounded-xl transition-all flex justify-center items-center text-white/90 text-2xl border border-white/5 cursor-pointer shadow-lg">
                         <i className="far fa-file-pdf"></i>
                         <span
                             className="absolute -top-12 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Currículo</span>
                     </div>
 
-                    <div onClick={() => loadApp('dossie')}
-                        className="dock-item group relative w-12 h-12 bg-white/10 rounded-xl flex justify-center items-center text-white/90 text-2xl border border-white/5 cursor-pointer shadow-lg">
-                        <i className="fas fa-scroll"></i>
-                        <span
-                            className="absolute -top-12 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Dossiê</span>
-                    </div>
+                    
 
                     <div className="w-[1px] h-8 bg-white/20 mx-1 self-center"></div>
 
                     <div onClick={() => loadApp('sobre')}
-                        className="dock-item group relative w-12 h-12 bg-white/10 rounded-xl flex justify-center items-center text-white/90 text-2xl border border-white/5 cursor-pointer shadow-lg">
+                        className="dock-item group relative w-12 h-12 bg-white/10 hover:bg-white/20 rounded-xl transition-all flex justify-center items-center text-white/90 text-2xl border border-white/5 cursor-pointer shadow-lg">
                         <i className="far fa-user"></i>
                         <span
                             className="absolute -top-12 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Sobre
