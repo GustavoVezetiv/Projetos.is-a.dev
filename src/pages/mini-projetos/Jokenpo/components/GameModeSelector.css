@@ -1,0 +1,43 @@
+.mode-selector-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.mode-buttons {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.mode-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.05);
+}
+
+.mode-btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.mode-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.mode-btn strong {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.mode-btn small {
+  color: var(--text-secondary);
+  font-weight: normal;
+}

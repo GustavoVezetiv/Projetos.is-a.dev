@@ -1,0 +1,54 @@
+.fundo {
+    background-image: 
+    linear-gradient(127deg, rgba(102, 42, 187, 0.8), rgba(0, 255, 255, 0) 70.71%),
+    linear-gradient(217deg, rgba(235, 235, 235, 0.8), rgba(255, 0, 0, 0) 70.71%),
+    linear-gradient(127deg, rgba(143, 93, 212, 0.8), rgba(0, 255, 255, 0) 70.71%),
+    linear-gradient(217deg, rgba(255, 255, 255, 0.8), rgba(255, 0, 0, 0) 70.71%);
+    height: 100vh;
+    color: #120b3a;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+    position: relative;
+}
+
+.calculadora {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) ;
+}
+
+.botao {
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+    cursor: pointer;
+    background-color: rgb(228, 122, 222);
+    border: none;
+    color: #000000;
+    margin: 3px;
+    border-radius: 18px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.botao:hover {
+    background-color: rgb(238, 238, 238);
+    transition: all 0.3s ease-in-out;
+}
+
+#resultado {
+    width: 207px;
+    background-color: #fff;
+    height: 30px;
+    margin: 10px;
+    font-size: 25px;
+    color: black;
+    text-align: right;
+    padding: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+}
