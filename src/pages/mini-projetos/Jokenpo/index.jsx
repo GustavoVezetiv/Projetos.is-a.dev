@@ -5,6 +5,7 @@ import PlayerPanel from './components/PlayerPanel';
 import ChoiceButtons from './components/ChoiceButtons';
 import ResultDisplay from './components/ResultDisplay';
 import { determineWinner, getRandomChoice } from './utils/gameLogic';
+import './index.css';
 
 export default function App() {
   const [gameState, setGameState] = useState('ROULETTE'); // ROULETTE, MODE_SELECT, PLAYING, RESULT
@@ -131,89 +132,91 @@ export default function App() {
   };
 
   return (
-    <div className="game-container">
-      {gameState !== 'ROULETTE' && gameState !== 'MODE_SELECT' && (
-        <PlayerPanel 
-          title="Amigo" 
-          styleName={p1Style} 
-          choice={p1Choice} 
-          score={scores.p1} 
-          isPlayer1={true}
-          hiddenChoice={gameMode === 'pvp' && currentPlayer === 2 && gameState === 'PLAYING'}
-          isSpinning={isSpinningChoices}
-        />
-      )}
-
-      <div className="center-area">
-        <h1>JoKenPo!</h1>
-        
-        {gameState === 'ROULETTE' && (
-          <StyleRoulette onComplete={handleStylesSelected} />
-        )}
-
-        {gameState === 'MODE_SELECT' && (
-          <GameModeSelector onSelectMode={handleModeSelect} />
-        )}
-
-        {gameState === 'PLAYING' && (
-          <>
-            {gameMode === 'pve' && (
-              <ChoiceButtons 
-                styleName={p1Style} 
-                onChoice={handlePlayerChoice} 
-                title="Sua Vez" 
-              />
-            )}
-            
-            {gameMode === 'pvp' && currentPlayer === 1 && (
-              <ChoiceButtons 
-                styleName={p1Style} 
-                onChoice={handlePlayerChoice} 
-                title="Vez do Jogador 1 (Amigo)" 
-              />
-            )}
-            
-            {gameMode === 'pvp' && currentPlayer === 2 && (
-              <ChoiceButtons 
-                styleName={p2Style} 
-                onChoice={handlePlayerChoice} 
-                title="Vez do Jogador 2 (Inimigo)" 
-              />
-            )}
-            
-            {gameMode === 'auto' && (
-              <h2 className="animate-pop">Batalha Automática!</h2>
-            )}
-          </>
-        )}
-
-        {gameState === 'RESULT' && (
-          <ResultDisplay 
-            winner={winner} 
-            onPlayAgain={resetRound}
-            onChangeMode={changeMode}
-            onRespin={respinStyles}
+    <div className="min-h-screen w-full flex items-center justify-center bg-[#0f172a] text-slate-100 font-['Outfit'] jokenpo-scope">
+      <div className="game-container w-full">
+        {gameState !== 'ROULETTE' && gameState !== 'MODE_SELECT' && (
+          <PlayerPanel 
+            title="Amigo" 
+            styleName={p1Style} 
+            choice={p1Choice} 
+            score={scores.p1} 
+            isPlayer1={true}
+            hiddenChoice={gameMode === 'pvp' && currentPlayer === 2 && gameState === 'PLAYING'}
+            isSpinning={isSpinningChoices}
           />
         )}
 
-        {gameState !== 'ROULETTE' && (
-           <div style={{color: 'var(--text-secondary)', marginTop: '2rem'}}>
-             Empates: {scores.draws}
-           </div>
+        <div className="center-area">
+          <h1 className="text-5xl font-black text-center my-8 bg-gradient-to-r from-blue-500 to-pink-500 bg-clip-text text-transparent drop-shadow-lg">JoKenPo!</h1>
+          
+          {gameState === 'ROULETTE' && (
+            <StyleRoulette onComplete={handleStylesSelected} />
+          )}
+
+          {gameState === 'MODE_SELECT' && (
+            <GameModeSelector onSelectMode={handleModeSelect} />
+          )}
+
+          {gameState === 'PLAYING' && (
+            <>
+              {gameMode === 'pve' && (
+                <ChoiceButtons 
+                  styleName={p1Style} 
+                  onChoice={handlePlayerChoice} 
+                  title="Sua Vez" 
+                />
+              )}
+              
+              {gameMode === 'pvp' && currentPlayer === 1 && (
+                <ChoiceButtons 
+                  styleName={p1Style} 
+                  onChoice={handlePlayerChoice} 
+                  title="Vez do Jogador 1 (Amigo)" 
+                />
+              )}
+              
+              {gameMode === 'pvp' && currentPlayer === 2 && (
+                <ChoiceButtons 
+                  styleName={p2Style} 
+                  onChoice={handlePlayerChoice} 
+                  title="Vez do Jogador 2 (Inimigo)" 
+                />
+              )}
+              
+              {gameMode === 'auto' && (
+                <h2 className="animate-pop text-2xl font-bold">Batalha Automática!</h2>
+              )}
+            </>
+          )}
+
+          {gameState === 'RESULT' && (
+            <ResultDisplay 
+              winner={winner} 
+              onPlayAgain={resetRound}
+              onChangeMode={changeMode}
+              onRespin={respinStyles}
+            />
+          )}
+
+          {gameState !== 'ROULETTE' && (
+             <div style={{color: 'var(--text-secondary)', marginTop: '2rem'}}>
+               Empates: {scores.draws}
+             </div>
+          )}
+        </div>
+
+        {gameState !== 'ROULETTE' && gameState !== 'MODE_SELECT' && (
+          <PlayerPanel 
+            title="Inimigo" 
+            styleName={p2Style} 
+            choice={p2Choice} 
+            score={scores.p2} 
+            isPlayer1={false}
+            hiddenChoice={false}
+            isSpinning={isSpinningChoices}
+          />
         )}
       </div>
-
-      {gameState !== 'ROULETTE' && gameState !== 'MODE_SELECT' && (
-        <PlayerPanel 
-          title="Inimigo" 
-          styleName={p2Style} 
-          choice={p2Choice} 
-          score={scores.p2} 
-          isPlayer1={false}
-          hiddenChoice={false}
-          isSpinning={isSpinningChoices}
-        />
-      )}
     </div>
   );
 }
