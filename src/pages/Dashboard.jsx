@@ -3,50 +3,60 @@ import { useNavigate } from 'react-router-dom';
 
 function CertificadosTemplate({ openCertModal }) {
 
-    const attachDrag = (e) => {
-        const slider = e.currentTarget;
-        if (slider.dataset.dragAttached) return;
-        slider.dataset.dragAttached = 'true';
-        let isDown = false;
-        let autoScrollInterval;
-        slider.dataset.isHovered = "false";
-        let startX;
-        let scrollLeft;
-        
-        // Auto scroll setup
-        const startAutoScroll = () => {
-            if (autoScrollInterval) return;
-            autoScrollInterval = setInterval(() => {
-                if (slider.dataset.isHovered !== 'true' && !isDown) {
-                    slider.scrollLeft += 1;
-                }
-            }, 30);
-        };
-        startAutoScroll();
-        
-        slider.addEventListener('mouseenter', () => { slider.dataset.isHovered = 'true'; });
-        slider.addEventListener('mouseleave', () => { slider.dataset.isHovered = 'false'; isDown = false; });
-        slider.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX = e.pageX - slider.offsetLeft;
-            scrollLeft = slider.scrollLeft;
-        });
-        slider.addEventListener('mouseleave', () => { isDown = false; });
-        slider.addEventListener('mouseup', () => { isDown = false; });
-        slider.addEventListener('mousemove', (e) => {
-            if(!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 2;
-            slider.scrollLeft = scrollLeft - walk;
-        });
-        slider.addEventListener('wheel', (e) => {
-            if (Math.abs(e.deltaY) > 0) {
+    React.useEffect(() => {
+        const intervals = [];
+        const attachDrag = (slider) => {
+            if (slider.dataset.dragAttached) return;
+            slider.dataset.dragAttached = 'true';
+            let isDown = false;
+            slider.dataset.isHovered = "false";
+            let startX;
+            let scrollLeft;
+            
+            const startAutoScroll = () => {
+                const autoScrollInterval = setInterval(() => {
+                    if (slider.dataset.isHovered !== 'true' && !isDown) {
+                        slider.scrollLeft += 1;
+                    }
+                }, 30);
+                intervals.push(autoScrollInterval);
+            };
+            startAutoScroll();
+            
+            slider.addEventListener('mouseenter', () => { slider.dataset.isHovered = 'true'; });
+            slider.addEventListener('mouseleave', () => { slider.dataset.isHovered = 'false'; isDown = false; });
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+            slider.addEventListener('mouseup', () => { isDown = false; });
+            slider.addEventListener('mousemove', (e) => {
+                if(!isDown) return;
                 e.preventDefault();
-                slider.scrollLeft += e.deltaY;
-            }
-        });
-    };
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+            slider.addEventListener('wheel', (e) => {
+                if (Math.abs(e.deltaY) > 0) {
+                    e.preventDefault();
+                    slider.scrollLeft += e.deltaY;
+                }
+            });
+        };
+
+        const sliders = document.querySelectorAll('.marquee-container');
+        sliders.forEach(attachDrag);
+
+        return () => {
+            intervals.forEach(clearInterval);
+            sliders.forEach(s => {
+                delete s.dataset.dragAttached;
+                // listeners are garbage collected when elements are removed anyway
+            });
+        };
+    }, []);
 
     return (
         <React.Fragment>
@@ -58,7 +68,7 @@ function CertificadosTemplate({ openCertModal }) {
 
     <div className="mb-8">
         <h3 className="text-white font-montserrat font-bold text-sm mb-4 pl-4 border-l-4 border-blue-500 ml-2 uppercase">Dev & Arquitetura</h3>
-        <div className="marquee-container flex overflow-x-auto w-full cursor-grab active:cursor-grabbing scrollbar-hide" onMouseEnter={attachDrag} id="marquee-cert-1">
+        <div className="marquee-container flex overflow-x-auto w-full cursor-grab active:cursor-grabbing scrollbar-hide"  id="marquee-cert-1">
             <div className="marquee-content flex gap-4 pr-10">
                 
                 <div className="w-32 sm:w-40 h-40 sm:h-56 bg-[#1a1b1f] rounded-xl overflow-hidden flex-shrink-0 border border-white/5 flex flex-col hover:scale-105 transition-transform cursor-pointer" onClick={() => openCertModal('Clean Code & SOLID')}>
@@ -142,7 +152,7 @@ function CertificadosTemplate({ openCertModal }) {
 
     <div className="mb-8">
         <h3 className="text-white font-montserrat font-bold text-sm mb-4 pl-4 border-l-4 border-red-500 ml-2 uppercase">Segurança & Infra</h3>
-        <div className="marquee-container flex overflow-x-auto w-full cursor-grab active:cursor-grabbing scrollbar-hide" onMouseEnter={attachDrag} id="marquee-cert-2">
+        <div className="marquee-container flex overflow-x-auto w-full cursor-grab active:cursor-grabbing scrollbar-hide"  id="marquee-cert-2">
             <div className="marquee-content flex gap-4 pr-10">
                 
                 <div className="w-32 sm:w-40 h-40 sm:h-56 bg-[#1a1b1f] rounded-xl overflow-hidden flex-shrink-0 border border-white/5 flex flex-col hover:scale-105 transition-transform cursor-pointer" onClick={() => openCertModal('Cibersegurança')}><div className="h-[60%] w-full bg-gradient-to-br from-red-700 to-rose-900 flex items-center justify-center"><i className="fa-solid fa-shield-halved text-4xl text-red-300"></i></div><div className="h-[40%] p-3 flex flex-col justify-center"><h3 className="text-white text-xs font-bold">Cibersegurança</h3><p className="text-gray-400 text-[10px] mt-1">Ataques & Prevenção</p></div>
@@ -183,7 +193,7 @@ function CertificadosTemplate({ openCertModal }) {
 
     <div className="mb-12">
         <h3 className="text-white font-montserrat font-bold text-sm mb-4 pl-4 border-l-4 border-green-500 ml-2 uppercase">Produtividade & Office</h3>
-        <div className="marquee-container flex overflow-x-auto w-full cursor-grab active:cursor-grabbing scrollbar-hide" onMouseEnter={attachDrag} id="marquee-cert-4">
+        <div className="marquee-container flex overflow-x-auto w-full cursor-grab active:cursor-grabbing scrollbar-hide"  id="marquee-cert-4">
             <div className="marquee-content flex gap-4 pr-10 pb-32">
 
                 <div className="w-32 sm:w-40 h-40 sm:h-56 bg-[#1a1b1f] rounded-xl overflow-hidden flex-shrink-0 border border-white/5 flex flex-col hover:scale-105 transition-transform cursor-pointer" onClick={() => openCertModal('Excel Avançado')}><div className="h-[60%] w-full bg-gradient-to-br from-green-600 to-emerald-800 flex items-center justify-center"><i className="fa-solid fa-file-excel text-4xl text-green-300"></i></div><div className="h-[40%] p-3 flex flex-col justify-center"><h3 className="text-white text-xs font-bold">Excel Avançado</h3><p className="text-gray-400 text-[10px] mt-1">Fórmulas & Dashboards</p></div>
