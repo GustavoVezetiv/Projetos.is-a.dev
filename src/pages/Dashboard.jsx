@@ -456,7 +456,7 @@ export default function Dashboard() {
                 </div>
             </div>
 
-            <div id="v3-app-window" className={`${activeApp ? "" : "hidden"} absolute inset-0 z-40 flex items-center justify-center p-2 sm:p-4 md:p-10 backdrop-blur-md bg-black/40 app-window pointer-events-none`} onClick={closeApp}>
+            <div id="v3-app-window" className={`${activeApp ? "" : "hidden"} absolute inset-0 z-40 flex items-center justify-center p-2 sm:p-4 md:p-10 backdrop-blur-md bg-black/40 app-window`} onClick={closeApp}>
                 <div id="v3-app-content"
                     className="w-full h-full sm:max-h-[75vh] md:h-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-6xl bg-[#0f1014] rounded-3xl border border-white/10 shadow-2xl overflow-hidden relative flex flex-col" onClick={(e) => e.stopPropagation()}>
                     <div
@@ -539,7 +539,7 @@ export default function Dashboard() {
         </section>
 
         
-        <div id="cert-modal" className={`${activeCert ? "" : "hidden"} fixed inset-0 z-[60] flex items-center justify-center p-4 backdrop-blur-sm bg-black/60 pointer-events-none`} onClick={closeCertModal}>
+        <div id="cert-modal" className={`${activeCert ? "" : "hidden"} fixed inset-0 z-[60] flex items-center justify-center p-4 backdrop-blur-sm bg-black/60`} onClick={closeCertModal}>
             <div className="bg-[#0f1014] rounded-2xl border border-white/10 max-w-md w-full p-6 relative pointer-events-auto" onClick={(e) => e.stopPropagation()}>
                 <button onClick={closeCertModal} className="absolute top-3 right-3 text-white/60 hover:text-white text-2xl">
                     <i className="fas fa-times"></i>
