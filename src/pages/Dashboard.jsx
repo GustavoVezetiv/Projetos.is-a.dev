@@ -460,6 +460,8 @@ export default function Dashboard() {
                           <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">GitHub</span>
                       </a>
 
+                      <div className="w-[1px] h-6 bg-white/20 mx-1 self-center"></div>
+
                       <a href="javascript:void(0)" onClick={() => confirmRedirect('https://vitrine.vezetiv.dev')}
                           className="group relative w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex justify-center items-center text-white/70 hover:text-white text-lg border border-white/10 cursor-pointer transition-all">
                           <i className="fas fa-window-restore"></i>
