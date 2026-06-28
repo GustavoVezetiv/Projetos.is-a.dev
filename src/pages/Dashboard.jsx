@@ -2,6 +2,36 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function CertificadosTemplate({ openCertModal }) {
+
+    const attachDrag = (e) => {
+        const slider = e.currentTarget;
+        if (slider.dataset.dragAttached) return;
+        slider.dataset.dragAttached = 'true';
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+        slider.addEventListener('mouseleave', () => { isDown = false; });
+        slider.addEventListener('mouseup', () => { isDown = false; });
+        slider.addEventListener('mousemove', (e) => {
+            if(!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+        slider.addEventListener('wheel', (e) => {
+            if (Math.abs(e.deltaY) > 0) {
+                e.preventDefault();
+                slider.scrollLeft += e.deltaY;
+            }
+        });
+    };
+
     return (
         <React.Fragment>
             
@@ -12,8 +42,8 @@ function CertificadosTemplate({ openCertModal }) {
 
     <div className="mb-8">
         <h3 className="text-white font-montserrat font-bold text-sm mb-4 pl-4 border-l-4 border-blue-500 ml-2 uppercase">Dev & Arquitetura</h3>
-        <div className="marquee-container w-full" id="marquee-cert-1">
-            <div className="marquee-content">
+        <div className="marquee-container flex overflow-x-auto w-full cursor-grab active:cursor-grabbing scrollbar-hide" onMouseEnter={attachDrag} id="marquee-cert-1">
+            <div className="marquee-content flex gap-4 pr-10">
                 
                 <div className="w-32 sm:w-40 h-40 sm:h-56 bg-[#1a1b1f] rounded-xl overflow-hidden flex-shrink-0 border border-white/5 flex flex-col hover:scale-105 transition-transform cursor-pointer" onClick={() => openCertModal('Clean Code & SOLID')}>
                     <div className="h-[60%] w-full bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center"><i className="fa-solid fa-broom text-4xl text-white"></i></div>
@@ -96,8 +126,8 @@ function CertificadosTemplate({ openCertModal }) {
 
     <div className="mb-8">
         <h3 className="text-white font-montserrat font-bold text-sm mb-4 pl-4 border-l-4 border-red-500 ml-2 uppercase">Segurança & Infra</h3>
-        <div className="marquee-container w-full" id="marquee-cert-2">
-            <div className="marquee-content">
+        <div className="marquee-container flex overflow-x-auto w-full cursor-grab active:cursor-grabbing scrollbar-hide" onMouseEnter={attachDrag} id="marquee-cert-2">
+            <div className="marquee-content flex gap-4 pr-10">
                 
                 <div className="w-32 sm:w-40 h-40 sm:h-56 bg-[#1a1b1f] rounded-xl overflow-hidden flex-shrink-0 border border-white/5 flex flex-col hover:scale-105 transition-transform cursor-pointer" onClick={() => openCertModal('Cibersegurança')}><div className="h-[60%] w-full bg-gradient-to-br from-red-700 to-rose-900 flex items-center justify-center"><i className="fa-solid fa-shield-halved text-4xl text-red-300"></i></div><div className="h-[40%] p-3 flex flex-col justify-center"><h3 className="text-white text-xs font-bold">Cibersegurança</h3><p className="text-gray-400 text-[10px] mt-1">Ataques & Prevenção</p></div>
                 </div>
@@ -137,8 +167,8 @@ function CertificadosTemplate({ openCertModal }) {
 
     <div className="mb-12">
         <h3 className="text-white font-montserrat font-bold text-sm mb-4 pl-4 border-l-4 border-green-500 ml-2 uppercase">Produtividade & Office</h3>
-        <div className="marquee-container w-full" id="marquee-cert-4">
-            <div className="marquee-content pb-32">
+        <div className="marquee-container flex overflow-x-auto w-full cursor-grab active:cursor-grabbing scrollbar-hide" onMouseEnter={attachDrag} id="marquee-cert-4">
+            <div className="marquee-content flex gap-4 pr-10 pb-32">
 
                 <div className="w-32 sm:w-40 h-40 sm:h-56 bg-[#1a1b1f] rounded-xl overflow-hidden flex-shrink-0 border border-white/5 flex flex-col hover:scale-105 transition-transform cursor-pointer" onClick={() => openCertModal('Excel Avançado')}><div className="h-[60%] w-full bg-gradient-to-br from-green-600 to-emerald-800 flex items-center justify-center"><i className="fa-solid fa-file-excel text-4xl text-green-300"></i></div><div className="h-[40%] p-3 flex flex-col justify-center"><h3 className="text-white text-xs font-bold">Excel Avançado</h3><p className="text-gray-400 text-[10px] mt-1">Fórmulas & Dashboards</p></div>
                 </div>
@@ -192,7 +222,7 @@ function ProjetosTemplate() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-20">
                     
-                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
+                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
                         <div className="flex justify-between items-start mb-4">
                             <div className="p-3 bg-white/5 rounded-lg"><i className="fas fa-city text-2xl text-blue-500"></i></div>
                             <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-white/5">
@@ -204,7 +234,7 @@ function ProjetosTemplate() {
                         <div className="flex gap-3 text-white/40"><i className="fab fa-python" title="Python"></i><i className="fas fa-database" title="PostgreSQL"></i><i className="fab fa-docker" title="Docker"></i></div>
                     </div>
 
-                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-cyan-500/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
+                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
                         <div className="flex justify-between items-start mb-4">
                             <div className="p-3 bg-white/5 rounded-lg"><i className="fas fa-mobile-alt text-2xl text-cyan-500"></i></div>
                             <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-white/5">
@@ -216,7 +246,7 @@ function ProjetosTemplate() {
                         <div className="flex gap-3 text-white/40"><i className="fab fa-react" title="React Native"></i><i className="fab fa-js" title="TypeScript"></i></div>
                     </div>
 
-                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-pink-500/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
+                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
                         <div className="flex justify-between items-start mb-4">
                             <div className="p-3 bg-white/5 rounded-lg"><i className="fas fa-robot text-2xl text-pink-500"></i></div>
                             <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-white/5">
@@ -228,7 +258,7 @@ function ProjetosTemplate() {
                         <div className="flex gap-3 text-white/40"><i className="fas fa-project-diagram" title="N8N"></i><i className="fab fa-docker" title="Docker"></i><i className="fab fa-python" title="Python"></i></div>
                     </div>
 
-                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
+                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
                         <div className="flex justify-between items-start mb-4">
                             <div className="p-3 bg-white/5 rounded-lg"><i className="fas fa-book text-2xl text-purple-500"></i></div>
                             <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-white/5">
@@ -240,7 +270,7 @@ function ProjetosTemplate() {
                         <div className="flex gap-3 text-white/40"><i className="fab fa-php" title="PHP"></i><i className="fas fa-database" title="MySQL"></i></div>
                     </div>
 
-                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-green-500/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
+                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
                         <div className="flex justify-between items-start mb-4">
                             <div className="p-3 bg-white/5 rounded-lg"><i className="fas fa-car text-2xl text-green-500"></i></div>
                             <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-white/5">
@@ -252,7 +282,7 @@ function ProjetosTemplate() {
                         <div className="flex gap-3 text-white/40"><i className="fab fa-python" title="Django"></i><i className="fas fa-users-gear" title="Gestão de Usuários"></i><i className="fas fa-database" title="SQL"></i></div>
                     </div>
 
-                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
+                    <div className="relative bg-[#141414]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/50 transition-all duration-300 hover:-translate-y-1 group overflow-hidden">
                         <div className="flex justify-between items-start mb-4">
                             <div className="p-3 bg-white/5 rounded-lg"><i className="fas fa-brain text-2xl text-purple-500"></i></div>
                             <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-white/5">
@@ -325,36 +355,11 @@ function SobreTemplate({ bioExpanded, setBioExpanded }) {
     );
 }
 
-function DossieTemplate() {
-    return (
-        <React.Fragment>
-            
-            <div className="pt-10 px-4 pb-24">
-                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 border-b border-white/10 pb-4">
-                    <div>
-                        <h2 className="font-montserrat text-4xl font-black text-white mb-1 tracking-tighter">DOSSIÊ</h2>
-                        <p className="text-white/50 text-xs font-inter tracking-widest uppercase">Recomendações • Bastidores • Confiança</p>
-                    </div>
-                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 text-[10px] text-cyan-200 border border-cyan-400/20 uppercase tracking-widest">
-                        <i className="fas fa-dice-d20"></i>
-                        <span>Arquivo Vezetiv</span>
-                    </div>
-                </div>
-
-                <div id="dossie-recommendations" className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    
-                </div>
-            </div>
-       
-        </React.Fragment>
-    );
-}
-
 function CurriculoTemplate() {
     return (
         <React.Fragment>
             
-            <div className="flex flex-col items-center justify-center h-full p-6">
+            <div className="flex flex-col items-center justify-center min-h-full p-6">
                 <i className="far fa-file-pdf text-6xl text-red-500 mb-4"></i>
                 <h2 className="text-2xl font-bold mb-2">Visualizador de PDF</h2>
                 <p className="text-white/50 mb-6">Clique aqui para visualizar em PDF o currículo.</p>
@@ -456,7 +461,7 @@ export default function Dashboard() {
                 </div>
             </div>
 
-            <div id="v3-app-window" className={`${activeApp ? "" : "hidden"} absolute inset-0 z-40 flex items-center justify-center p-2 sm:p-4 md:p-10 backdrop-blur-md bg-black/40 app-window`} onClick={closeApp}>
+            <div id="v3-app-window" className={`${activeApp ? "" : "hidden"} fixed inset-0 z-40 flex items-center justify-center p-2 sm:p-4 md:p-10 backdrop-blur-md bg-black/40 app-window`} onClick={closeApp}>
                 <div id="v3-app-content"
                     className="w-full h-full sm:max-h-[75vh] md:h-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-6xl bg-[#0f1014] rounded-3xl border border-white/10 shadow-2xl overflow-hidden relative flex flex-col" onClick={(e) => e.stopPropagation()}>
                     <div
@@ -474,7 +479,7 @@ export default function Dashboard() {
                              activeApp === 'projetos' ? 'Projetos' :
                              activeApp === 'curriculo' ? 'Currículo' :
                              activeApp === 'sobre' ? 'Sobre Mim' :
-                             activeApp === 'dossie' ? 'Dossiês' :
+                             
                              'Perfect Interface'}
                         </span>
                         <div className="w-10"></div>
@@ -483,7 +488,7 @@ export default function Dashboard() {
     {activeApp === 'certificados' && <CertificadosTemplate openCertModal={openCertModal} />}
     {activeApp === 'projetos' && <ProjetosTemplate />}
     {activeApp === 'sobre' && <SobreTemplate bioExpanded={bioExpanded} setBioExpanded={setBioExpanded} />}
-    {activeApp === 'dossie' && <DossieTemplate />}
+    
     {activeApp === 'curriculo' && <CurriculoTemplate />}
 </div>
                     <p className="modal-close-hint shrink-0 border-t border-white/5 px-4 py-2 text-center text-[10px] uppercase tracking-[2px] text-white/35">
