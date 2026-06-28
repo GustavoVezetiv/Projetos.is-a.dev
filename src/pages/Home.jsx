@@ -129,9 +129,9 @@ export default function Home() {
                 <div id="destiny-dice-container" onClick={rollDestiny}>
                     <div className="dice-tooltip">Rolar para Iniciar</div>
                     <div className="relative flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-600 to-purple-800 rounded-full shadow-2xl border-4 border-white/20">
-                        <i id="d20-icon" className={`fas fa-dice-d20 text-4xl text-white ${isRolling ? 'rolling' : ''}`} style={{ opacity: rollResult && !isRolling ? 0.2 : 1, transform: isRolling ? '' : 'rotate(0deg) scale(1)' }}></i>
+                        <i id="d20-icon" className={`fas fa-dice-d20 text-4xl text-white ${isRolling ? 'rolling' : ''}`} style={{ opacity: isRolling || rollResult ? 0.2 : 1, transform: isRolling ? '' : 'rotate(0deg) scale(1)' }}></i>
                         {rollResult && (
-                            <span id="d20-result" className="absolute text-white font-bold text-xl opacity-100 transition-opacity">
+                            <span id="d20-result" className="absolute text-white font-bold text-2xl opacity-100 transition-opacity drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
                                 {rollResult}
                             </span>
                         )}
@@ -186,9 +186,9 @@ export default function Home() {
                     <div id="destiny-dice-container" onClick={resetDice} style={{ opacity: 1, display: 'block' }}>
                         <div className="dice-tooltip">Rolar para Iniciar</div>
                         <div className="relative flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-600 to-purple-800 rounded-full shadow-2xl border-4 border-white/20">
-                            <i id="d20-icon" className={`fas fa-dice-d20 text-4xl text-white ${isRolling ? 'rolling' : ''}`} style={{ opacity: rollResult && !isRolling ? 0.2 : 1, transform: isRolling ? '' : 'rotate(0deg) scale(1)' }}></i>
+                            <i id="d20-icon" className={`fas fa-dice-d20 text-4xl text-white ${isRolling ? 'rolling' : ''}`} style={{ opacity: isRolling || rollResult ? 0.2 : 1, transform: isRolling ? '' : 'rotate(0deg) scale(1)' }}></i>
                             {rollResult && (
-                                <span id="d20-result" className="absolute text-white font-bold text-xl opacity-100 transition-opacity">
+                                <span id="d20-result" className="absolute text-white font-bold text-2xl opacity-100 transition-opacity drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
                                     {rollResult}
                                 </span>
                             )}
