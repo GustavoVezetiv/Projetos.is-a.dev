@@ -446,10 +446,22 @@ export default function Dashboard() {
 
                     <a href="javascript:void(0)" onClick={() => confirmRedirect('https://github.com/gustavovezetiv')}
                         className="group relative w-10 h-10 bg-white/10 hover:bg-gray-700/30 rounded-lg flex justify-center items-center text-white/70 hover:text-white text-lg border border-white/10 cursor-pointer transition-all">
-                        <i className="fab fa-github"></i>
-                        <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">GitHub</span>
-                    </a>
-                </div>
+                          <i className="fab fa-github"></i>
+                          <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">GitHub</span>
+                      </a>
+
+                      <a href="javascript:void(0)" onClick={() => confirmRedirect('https://vitrine.vezetiv.dev')}
+                          className="group relative w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex justify-center items-center text-white/70 hover:text-white text-lg border border-white/10 cursor-pointer transition-all">
+                          <i className="fas fa-window-restore"></i>
+                          <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Vitrine</span>
+                      </a>
+
+                      <a href="javascript:void(0)" onClick={() => confirmRedirect('https://acervo.vezetiv.dev')}
+                          className="group relative w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex justify-center items-center text-white/70 hover:text-white text-lg border border-white/10 cursor-pointer transition-all">
+                          <i className="fas fa-box-archive"></i>
+                          <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Acervo</span>
+                      </a>
+                  </div>
             </div>
 
             <div id="v3-app-window" className={`${activeApp ? "" : "hidden"} fixed inset-0 z-40 flex items-center justify-center p-2 sm:p-4 md:p-10 backdrop-blur-md bg-black/40 app-window`} onClick={closeApp}>
