@@ -308,10 +308,9 @@ function SobreTemplate({ bioExpanded, setBioExpanded }) {
         <React.Fragment>
             
             <div className="flex flex-col items-center justify-center p-10 text-center max-w-3xl mx-auto mt-10">
-                <div
-                    className="w-32 h-32 bg-gray-700 rounded-full mb-6 border-4 border-white/10 flex items-center justify-center text-4xl">
-                    <i className="fas fa-user-astronaut"></i>
-                </div>
+                  <div className="w-32 h-32 rounded-full mb-6 border-4 border-white/10 overflow-hidden shadow-xl">
+                      <img src="/img/profile.png" alt="Gustavo Vezetiv" className="w-full h-full object-cover" />
+                  </div>
                 <h2 className="text-3xl font-bold mb-4 font-montserrat"> Gustavo Vezetiv</h2>
                 
                 
