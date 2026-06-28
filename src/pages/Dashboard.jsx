@@ -469,7 +469,14 @@ export default function Dashboard() {
                             <div onClick={closeApp}
                                 className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 cursor-pointer transition-colors"></div>
                         </div>
-                        <span id="v3-app-title" className="text-xs font-bold text-white/50 uppercase tracking-widest">Perfect Interface</span>
+                        <span id="v3-app-title" className="text-xs font-bold text-white/50 uppercase tracking-widest">
+                            {activeApp === 'certificados' ? 'Certificações' : 
+                             activeApp === 'projetos' ? 'Projetos' :
+                             activeApp === 'curriculo' ? 'Currículo' :
+                             activeApp === 'sobre' ? 'Sobre Mim' :
+                             activeApp === 'dossie' ? 'Dossiês' :
+                             'Perfect Interface'}
+                        </span>
                         <div className="w-10"></div>
                     </div>
                     <div id="v3-app-body" className="flex-1 overflow-y-auto overflow-x-hidden p-6 relative">
