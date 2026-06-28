@@ -386,7 +386,7 @@ export default function Dashboard() {
     const [activeCert, setActiveCert] = useState(null);
     const [bioExpanded, setBioExpanded] = useState(false);
 
-    const loadApp = (app) => setActiveApp(app);
+    const loadApp = (app) => setActiveApp(prev => prev === app ? null : app);
     const closeApp = () => setActiveApp(null);
     const openCertModal = (cert) => setActiveCert(cert);
     const closeCertModal = () => setActiveCert(null);
