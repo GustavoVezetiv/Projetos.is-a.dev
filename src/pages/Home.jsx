@@ -53,19 +53,27 @@ export default function Home() {
         if (isRolling) return;
         setIsRolling(true);
         setRollResult(null);
+        setShowChaosMode(false);
+        setHideUglyOverlay(false);
+
+        // Animação de números rolando enquanto o dado gira
+        let animInterval = setInterval(() => {
+            setRollResult(Math.floor(Math.random() * 20) + 1);
+        }, 50);
 
         setTimeout(() => {
-            const roll = Math.floor(Math.random() * 20) + 1;
-            setRollResult(roll);
+            clearInterval(animInterval);
+            const finalRoll = Math.floor(Math.random() * 20) + 1;
+            setRollResult(finalRoll);
+            setIsRolling(false); // Para a animação do dado girando
 
             setTimeout(() => {
-                if (roll >= 15) {
-                    triggerCriticalSuccess(roll);
+                if (finalRoll >= 15) {
+                    triggerCriticalSuccess(finalRoll);
                 } else {
-                    triggerChaosMode(roll);
+                    triggerChaosMode(finalRoll);
                 }
-                setIsRolling(false);
-            }, 800);
+            }, 1000);
         }, 1000);
     };
 
@@ -122,7 +130,7 @@ export default function Home() {
                     <div className="dice-tooltip">Rolar para Iniciar</div>
                     <div className="relative flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-600 to-purple-800 rounded-full shadow-2xl border-4 border-white/20">
                         <i id="d20-icon" className={`fas fa-dice-d20 text-4xl text-white ${isRolling ? 'rolling' : ''}`} style={{ opacity: rollResult && !isRolling ? 0.2 : 1, transform: isRolling ? '' : 'rotate(0deg) scale(1)' }}></i>
-                        {rollResult && !isRolling && (
+                        {rollResult && (
                             <span id="d20-result" className="absolute text-white font-bold text-xl opacity-100 transition-opacity">
                                 {rollResult}
                             </span>
@@ -179,7 +187,7 @@ export default function Home() {
                         <div className="dice-tooltip">Rolar para Iniciar</div>
                         <div className="relative flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-600 to-purple-800 rounded-full shadow-2xl border-4 border-white/20">
                             <i id="d20-icon" className={`fas fa-dice-d20 text-4xl text-white ${isRolling ? 'rolling' : ''}`} style={{ opacity: rollResult && !isRolling ? 0.2 : 1, transform: isRolling ? '' : 'rotate(0deg) scale(1)' }}></i>
-                            {rollResult && !isRolling && (
+                            {rollResult && (
                                 <span id="d20-result" className="absolute text-white font-bold text-xl opacity-100 transition-opacity">
                                     {rollResult}
                                 </span>
