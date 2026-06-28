@@ -441,13 +441,13 @@ export default function Dashboard() {
 
                 
                 <div className="flex gap-3 mt-6">
-                    <a href="javascript:void(0)" onClick={() => confirmRedirect('https://linkedin.com/in/gustavovezetiv')}
+                    <a href="javascript:void(0)" onClick={() => confirmRedirect('https://www.linkedin.com/in/gustavo-vezetiv-08416126b/')}
                         className="group relative w-10 h-10 bg-white/10 hover:bg-blue-600/30 rounded-lg flex justify-center items-center text-white/70 hover:text-white text-lg border border-white/10 cursor-pointer transition-all">
                         <i className="fab fa-linkedin-in"></i>
                         <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">LinkedIn</span>
                     </a>
 
-                    <a href="javascript:void(0)" onClick={() => confirmRedirect('https://instagram.com/gustavovezetiv')}
+                    <a href="javascript:void(0)" onClick={() => confirmRedirect('https://www.instagram.com/vezetiv.dev')}
                         className="group relative w-10 h-10 bg-white/10 hover:bg-pink-600/30 rounded-lg flex justify-center items-center text-white/70 hover:text-white text-lg border border-white/10 cursor-pointer transition-all">
                         <i className="fab fa-instagram"></i>
                         <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Instagram</span>
