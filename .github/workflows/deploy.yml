@@ -34,6 +34,24 @@ jobs:
       - name: Gerar build
         run: npm run build
 
+      - name: Incluir Músicas e Flores no artefato
+        run: cp -R MusicasEFlores/. dist/MusicasEFlores/
+
+      - name: Validar Músicas e Flores no artefato
+        run: |
+          test -f dist/MusicasEFlores/index.html
+          test -f dist/MusicasEFlores/src/js/app.js
+          test -f dist/MusicasEFlores/src/css/base.css
+
+      - name: Smoke test de Músicas e Flores
+        run: |
+          python3 -m http.server 4173 --directory dist &
+          server_pid=$!
+          trap 'kill $server_pid' EXIT
+          page=$(curl --fail --retry 5 --retry-connrefused --silent http://127.0.0.1:4173/MusicasEFlores/)
+          printf '%s' "$page" | grep -Fq 'Músicas &amp; Flores'
+          printf '%s' "$page" | grep -Fq 'src/js/app.js'
+
       - name: Copiar CNAME para dist
         run: cp CNAME dist/CNAME
 
