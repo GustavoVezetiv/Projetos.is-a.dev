@@ -1,3 +1,6 @@
 node_modules
 dist
 .env
+
+# Local source collection; reviewed, optimized copies live in assets/amore.
+TresAnos/Amore/
